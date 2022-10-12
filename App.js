@@ -1,15 +1,56 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../screens/Home';
+import Home from './src/screens/Home';
+import Create from './src/screens/Create';
+import Search from './src/screens/Search';
+import { StatusBar } from 'expo-status-bar';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 
-export default function App() {
+const App = () => {
     const Tab = createBottomTabNavigator();
 
     return (
         <NavigationContainer>
-            <Tab.Navigator initialRouteName='Home' backBehavior='history'>
-                <Tab.Screen name='Home' component={Home} />
+            <StatusBar style='auto' />
+            <Tab.Navigator
+                initialRouteName='Home'
+                backBehavior='history'
+                screenOptions={{
+                    tabBarActiveTintColor: 'purple',
+                    tabBarInactiveTintColor: 'black',
+                    tabBarStyle: {
+                        height: 55,
+                        paddingBottom: 5,
+                    },
+                }}
+            >
+                <Tab.Screen
+                    name='Home'
+                    component={Home}
+                    options={{
+                        tabBarLabel: 'Home',
+                        tabBarIcon: ({ color, size }) => <Ionicons name='home-outline' size={size} color={color} />,
+                    }}
+                />
+                <Tab.Screen
+                    name='Create'
+                    component={Create}
+                    options={{
+                        tabBarLabel: 'Create',
+                        tabBarIcon: ({ color, size }) => <AntDesign name='plus' size={size} color={color} />,
+                    }}
+                />
+                <Tab.Screen
+                    name='Search'
+                    component={Search}
+                    options={{
+                        tabBarLabel: 'Search',
+                        tabBarIcon: ({ color, size }) => <AntDesign name='search1' size={size} color={color} />,
+                    }}
+                />
             </Tab.Navigator>
         </NavigationContainer>
     );
-}
+};
+
+export default App;
