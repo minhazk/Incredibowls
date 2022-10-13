@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { colours } from '../styles/global';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { colours, defaultButtonStyles } from '../styles/global';
 import { getShortDate } from '../utils/DateFormatter';
+import CustomButton from './CustomButton';
 
-const GameCard = ({ competition, date, rink, teamOne, teamTwo }) => {
+const GameCard = ({ navigation, competition, date, rink, teamOne, teamTwo }) => {
     return (
         <View style={styles.gameCardContainer}>
             <View style={styles.teamsContainer}>
@@ -16,7 +17,11 @@ const GameCard = ({ competition, date, rink, teamOne, teamTwo }) => {
                 <Text style={styles.teamTwoLabel}>{teamTwo.name}</Text>
             </View>
             <Text style={styles.competition}>{competition}</Text>
-            <Text style={styles.rink}>{rink}</Text>
+            <Text style={styles.rink}>Rink {rink}</Text>
+            <View style={styles.buttonsContainer}>
+                <CustomButton label='Delete' style={styles.deleteBtn} />
+                <CustomButton label='Edit' onPress={() => navigation.navigate('Search')} style={styles.editBtn} />
+            </View>
         </View>
     );
 };
@@ -29,7 +34,6 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     teamsContainer: {
-        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -70,6 +74,23 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 12,
         color: colours.lightGray,
+    },
+    buttonsContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginTop: 5,
+    },
+    deleteBtn: {
+        flex: 1,
+        margin: 5,
+        padding: 5,
+        backgroundColor: colours.danger,
+    },
+    editBtn: {
+        flex: 1,
+        margin: 5,
+        padding: 5,
+        backgroundColor: colours.primary,
     },
 });
 

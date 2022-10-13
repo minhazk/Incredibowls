@@ -17,7 +17,26 @@ const screen = StyleSheet.create({
         backgroundColor: colours.primary,
         flex: 1,
         padding: 20,
+        paddingBottom: 0,
     },
 });
 
-export { colours, screen };
+const defaultButtonStyles = {
+    pressable: {
+        padding: 5,
+        color: colours.secondary,
+        backgroundColor: colours.accent,
+        borderRadius: 5,
+        padding: 10,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: 'white',
+    },
+    label: {
+        color: colours.secondary,
+        fontWeight: 'bold',
+        fontSize: 12,
+    },
+};
+
+export { colours, screen, defaultButtonStyles };

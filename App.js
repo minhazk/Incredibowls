@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './src/screens/Home';
 import Create from './src/screens/Create';
-import Search from './src/screens/Search';
+import Board from './src/screens/Board';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 
@@ -41,11 +41,11 @@ const App = () => {
                     }}
                 />
                 <Tab.Screen
-                    name='Search'
-                    component={Search}
+                    name='Board'
+                    component={Board}
                     options={{
-                        tabBarLabel: 'Search',
-                        tabBarIcon: ({ color, size }) => <AntDesign name='search1' size={size} color={color} />,
+                        tabBarLabel: 'Board',
+                        tabBarIcon: ({ color, size }) => <Ionicons name='md-clipboard-outline' size={size} color={color} />,
                     }}
                 />
             </Tab.Navigator>
