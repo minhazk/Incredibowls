@@ -1,48 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { colours } from '../styles/global';
+import ShotsInput from './ShotsInput';
 
 const ScoreInput = ({ setPoints, t1Shots, t1Total, t2Shots, t2Total, end, editable }) => {
     return (
         <View style={styles.row}>
-            <TextInput
-                onEndEditing={t =>
-                    setPoints(prev => [
-                        ...prev,
-                        {
-                            t1Shots: 0,
-                            t1Total: 1,
-                            t2Shots: 0,
-                            t2Total: 0,
-                        },
-                    ])
-                }
-                editable={editable}
-                style={styles.scoreInput}
-                keyboardType='numeric'
-                value={t1Shots?.toString()}
-                placeholder='0'
-            />
-            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={t1Total.toString()} onChangeText={() => null} />
+            <ShotsInput team='1' shots={t1Shots} setPoints={setPoints} editable={editable} />
+
+            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={t1Total.toString()} />
+
             <Text style={styles.endLabel}>{end + 1}</Text>
-            <TextInput
-                onEndEditing={t =>
-                    setPoints(prev => [
-                        ...prev,
-                        {
-                            t1Shots: 0,
-                            t1Total: 1,
-                            t2Shots: 0,
-                            t2Total: 0,
-                        },
-                    ])
-                }
-                editable={editable}
-                style={styles.scoreInput}
-                keyboardType='numeric'
-                value={t2Shots?.toString()}
-                placeholder='0'
-            />
+
+            <ShotsInput team='2' shots={t2Shots} setPoints={setPoints} editable={editable} />
+
             <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={t2Total.toString()} />
         </View>
     );
