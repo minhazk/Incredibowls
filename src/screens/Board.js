@@ -1,8 +1,17 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import ScoreInput from '../components/ScoreInput';
 import { colours, screen } from '../styles/global';
 import { getLongDate } from '../utils/DateFormatter';
 
 const Board = () => {
+    const [points, setPoints] = useState([
+        {
+            t1Total: 0,
+            t2Total: 0,
+        },
+    ]);
+
     const dummyBoard = {
         id: 1,
         competition: 'Competition Name',
@@ -48,7 +57,7 @@ const Board = () => {
                 <View>
                     {dummyBoard.teamOne.players.map((player, i) => {
                         return (
-                            <View style={styles.row}>
+                            <View style={styles.row} key={i}>
                                 <Text style={styles.teamOneName}>{player}</Text>
                                 <Text style={styles.playerCount}>{i + 1}</Text>
                                 <Text style={styles.teamTwoName}>{dummyBoard.teamTwo.players[i]}</Text>
@@ -66,22 +75,10 @@ const Board = () => {
                     <Text style={styles.scoreLabel}>SHOTS</Text>
                     <Text style={styles.scoreLabel}>TOTAL</Text>
                 </View>
-                <View styles={styles.row}>
-                    <View style={styles.scoreInputWrapper}>
-                        <TextInput style={styles.scoreInput} keyboardType='numeric' placeholder='0' />
-                    </View>
-                    <View style={styles.scoreInputWrapper}>
-                        <TextInput style={styles.scoreInput} keyboardType='numeric' placeholder='0' />
-                    </View>
-                    <View style={styles.scoreInputWrapper}>
-                        <TextInput style={styles.scoreInput} keyboardType='numeric' placeholder='0' />
-                    </View>
-                    <View style={styles.scoreInputWrapper}>
-                        <TextInput style={styles.scoreInput} keyboardType='numeric' placeholder='0' />
-                    </View>
-                    <View style={styles.scoreInputWrapper}>
-                        <TextInput style={styles.scoreInput} keyboardType='numeric' placeholder='0' />
-                    </View>
+                <View style={styles.scoresWrapper}>
+                    {points.map((end, i) => {
+                        return <ScoreInput setPoints={setPoints} {...end} end={i} editable={i + 1 === points.length} key={i} />;
+                    })}
                 </View>
             </View>
         </View>
@@ -128,12 +125,9 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 13,
     },
-    scoreInputWrapper: {},
-    scoreInput: {
-        borderWidth: 0.25,
-        borderColor: colours.lightGray,
+    scoresWrapper: {
+        marginTop: 10,
     },
 });
 

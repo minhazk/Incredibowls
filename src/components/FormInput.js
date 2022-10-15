@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { colours } from '../styles/global';
 
-const InputBox = ({ label, placeholder, keyboardType }) => {
+const FormInput = ({ label, placeholder, keyboardType }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default InputBox;
+export default FormInput;
