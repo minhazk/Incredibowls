@@ -79,6 +79,14 @@ const Board = () => {
                     {points.map((end, i) => {
                         return <ScoreRow points={points} setPoints={setPoints} {...end} end={i} key={i} />;
                     })}
+                    {console.log(points)}
+                </View>
+            </View>
+
+            <View style={styles.infoContainer}>
+                <View style={styles.totalsContainer}>
+                    <Text style={styles.totalCount}>Total: {points.reduce((prev, curr) => curr.team1Shot + prev, 0)}</Text>
+                    <Text style={styles.totalCount}>Total: {points.reduce((prev, curr) => curr.team2Shot + prev, 0)}</Text>
                 </View>
             </View>
         </View>
@@ -128,6 +136,14 @@ const styles = StyleSheet.create({
     },
     scoresWrapper: {
         marginTop: 10,
+    },
+    totalsContainer: {
+        flexDirection: 'row',
+    },
+    totalCount: {
+        flex: 1,
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
 });
 

@@ -7,12 +7,28 @@ import { StatusBar } from 'expo-status-bar';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 // import { GameContextProvider } from './src/context/GameContext';
 import { colours } from './src/styles/global';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import PlayerForm from './src/screens/PlayerForm';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+const FormStack = createNativeStackNavigator();
+
+function FormStackScreen() {
+    return (
+        <FormStack.Navigator>
+            <FormStack.Screen name='Create' component={Create} />
+            <FormStack.Screen name='PlayerForm' component={PlayerForm} />
+        </FormStack.Navigator>
+    );
+}
 
 const App = () => {
     const Tab = createBottomTabNavigator();
 
     return (
         // <GameContextProvider>
+        // <SafeAreaProvider>
+        //     <SafeAreaView>
         <NavigationContainer>
             <StatusBar style='auto' />
             <Tab.Navigator
@@ -37,7 +53,7 @@ const App = () => {
                 />
                 <Tab.Screen
                     name='Create'
-                    component={Create}
+                    component={FormStackScreen}
                     options={{
                         tabBarLabel: 'Create',
                         tabBarIcon: ({ color, size }) => <AntDesign name='plus' size={size} color={color} />,
@@ -53,7 +69,9 @@ const App = () => {
                 />
             </Tab.Navigator>
         </NavigationContainer>
-        // </GameContextProvider>
+        // {/* </GameContextProvider> */}
+        // {/* </SafeAreaView>
+        // </SafeAreaProvider> */}
     );
 };
 

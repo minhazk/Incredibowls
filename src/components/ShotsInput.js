@@ -9,15 +9,9 @@ const ShotsInput = ({ team, shot, points, setPoints, end }) => {
         if (!value) return;
         setPoints(prev => {
             prev[end][`team${team}Shot`] = Number(value);
-            prev[end][`team${team === '1' ? '2' : '1'}Shot`] = 0;
+            prev[end][`team${team === 1 ? '2' : '1'}Shot`] = 0;
             return end === points.length - 1 ? [...prev, { team1Shot: 0, team2Shot: 0 }] : [...prev];
-            // const update = prev.map((point, i) => {
-            //     if (end === i) return { ...point, [`team${team === '1' ? '2' : '1'}Shot`]: 0 };
-            //     return point;
-            // });
-            // return end === points.length - 1 ? [...update, { team1Shot: 0, team2Shot: 0 }] : [...update];
         });
-        console.log(points);
     };
 
     return <TextInput value={value} onChangeText={setValue} onEndEditing={handleInput} style={styles.scoreInput} keyboardType='numeric' placeholder='0' />;
