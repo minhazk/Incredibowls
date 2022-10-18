@@ -1,20 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { colours } from '../styles/global';
 import ShotsInput from './ShotsInput';
 
-const ScoreRow = ({ setPoints, t1Shots, t1Total, t2Shots, t2Total, end, editable }) => {
+const ScoreRow = ({ points, setPoints, team1Shot, team2Shot, end }) => {
+    const [team1Total, setTeam1Total] = useState(0);
+    const [team2Total, setTeam2Total] = useState(0);
+
+    const handleTotal = () => {
+        setTeam1Total(points.slice(0, end).reduce((prev, curr) => curr.team1Shot + prev, 0));
+        setTeam2Total(points.slice(0, end).reduce((prev, curr) => curr.team2Shot + prev, 0));
+        return { team1Total, team2Total };
+    };
+
+    useEffect(() => {
+        handleTotal();
+    }, [points]);
+
+    useEffect(() => {
+        handleTotal();
+    }, []);
+
     return (
         <View style={styles.row}>
-            <ShotsInput team='1' shots={t1Shots} setPoints={setPoints} editable={editable} />
+            <ShotsInput team='1' end={end} shot={points[end].team1Shot} points={points} setPoints={setPoints} />
 
-            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={t1Total.toString()} />
+            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={team1Total.toString()} />
 
             <Text style={styles.endLabel}>{end + 1}</Text>
 
-            <ShotsInput team='2' shots={t2Shots} setPoints={setPoints} editable={editable} />
+            <ShotsInput team='2' end={end} shot={points[end].team2Shot} points={points} setPoints={setPoints} />
 
-            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={t2Total.toString()} />
+            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={team2Total.toString()} />
         </View>
     );
 };

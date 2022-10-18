@@ -7,8 +7,8 @@ import { getLongDate } from '../utils/DateFormatter';
 const Board = () => {
     const [points, setPoints] = useState([
         {
-            t1Total: 0,
-            t2Total: 0,
+            team1Shot: 0,
+            team2Shot: 0,
         },
     ]);
 
@@ -77,7 +77,7 @@ const Board = () => {
                 </View>
                 <View style={styles.scoresWrapper}>
                     {points.map((end, i) => {
-                        return <ScoreRow setPoints={setPoints} {...end} end={i} editable={i === points.length - 1} key={i} />;
+                        return <ScoreRow points={points} setPoints={setPoints} {...end} end={i} key={i} />;
                     })}
                 </View>
             </View>

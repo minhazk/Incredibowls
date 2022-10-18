@@ -2,39 +2,25 @@ import { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { colours } from '../styles/global';
 
-const ShotsInput = ({ team, shots, setPoints, editable }) => {
-    const [value, setValue] = useState(shots);
+const ShotsInput = ({ team, shot, points, setPoints, end }) => {
+    const [value, setValue] = useState(shot);
 
-    return (
-        <TextInput
-            value={value}
-            onChangeText={setValue}
-            onEndEditing={() => {
-                if (!value) return;
-                setPoints(prev => {
-                    const prevScore = prev[prev.length - 1];
-                    prev[prev.length - 1] = {
-                        ...prevScore,
-                        [`t${team}Points`]: value,
-                        [`t${team}Total`]: prevScore[`t${team}Total`] + Number(value),
-                    };
-                    return [
-                        ...prev,
-                        {
-                            t1Points: 0,
-                            t1Total: prev[prev.length - 1].t1Total,
-                            t2Points: 0,
-                            t2Total: prev[prev.length - 1].t2Total,
-                        },
-                    ];
-                });
-            }}
-            editable={editable}
-            style={styles.scoreInput}
-            keyboardType='numeric'
-            placeholder='0'
-        />
-    );
+    const handleInput = () => {
+        if (!value) return;
+        setPoints(prev => {
+            prev[end][`team${team}Shot`] = Number(value);
+            prev[end][`team${team === '1' ? '2' : '1'}Shot`] = 0;
+            return end === points.length - 1 ? [...prev, { team1Shot: 0, team2Shot: 0 }] : [...prev];
+            // const update = prev.map((point, i) => {
+            //     if (end === i) return { ...point, [`team${team === '1' ? '2' : '1'}Shot`]: 0 };
+            //     return point;
+            // });
+            // return end === points.length - 1 ? [...update, { team1Shot: 0, team2Shot: 0 }] : [...update];
+        });
+        console.log(points);
+    };
+
+    return <TextInput value={value} onChangeText={setValue} onEndEditing={handleInput} style={styles.scoreInput} keyboardType='numeric' placeholder='0' />;
 };
 
 const styles = StyleSheet.create({

@@ -9,7 +9,7 @@ const ACTIONS = {
 
 const GameContext = createContext({});
 
-export const useGameContext = useContext(gameContext);
+export const useGameContext = useContext(GameContext);
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -29,7 +29,7 @@ const reducer = (state, action) => {
 export const GameContextProvider = ({ children }) => {
     const [game, dispatch] = useReducer(reducer, {});
 
-    return <GameContext.Provider value={{ game, dispatch }}>{children}</GameContext.Provider>;
+    return <GameContext.Provider value={{}}>{children}</GameContext.Provider>;
 };
 
 /*

@@ -5,18 +5,21 @@ import Create from './src/screens/Create';
 import Board from './src/screens/Board';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
+// import { GameContextProvider } from './src/context/GameContext';
+import { colours } from './src/styles/global';
 
 const App = () => {
     const Tab = createBottomTabNavigator();
 
     return (
+        // <GameContextProvider>
         <NavigationContainer>
             <StatusBar style='auto' />
             <Tab.Navigator
                 initialRouteName='Home'
                 backBehavior='history'
                 screenOptions={{
-                    tabBarActiveTintColor: 'purple',
+                    tabBarActiveTintColor: colours.primary,
                     tabBarInactiveTintColor: 'black',
                     tabBarStyle: {
                         height: 55,
@@ -50,6 +53,7 @@ const App = () => {
                 />
             </Tab.Navigator>
         </NavigationContainer>
+        // </GameContextProvider>
     );
 };
 
