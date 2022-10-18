@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { colours } from '../styles/global';
 import ShotsInput from './ShotsInput';
 
-const ScoreInput = ({ setPoints, t1Shots, t1Total, t2Shots, t2Total, end, editable }) => {
+const ScoreRow = ({ setPoints, t1Shots, t1Total, t2Shots, t2Total, end, editable }) => {
     return (
         <View style={styles.row}>
             <ShotsInput team='1' shots={t1Shots} setPoints={setPoints} editable={editable} />
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ScoreInput;
+export default ScoreRow;

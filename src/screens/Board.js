@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import ScoreInput from '../components/ScoreInput';
+import ScoreRow from '../components/ScoreRow';
 import { colours, screen } from '../styles/global';
 import { getLongDate } from '../utils/DateFormatter';
 
@@ -77,7 +77,7 @@ const Board = () => {
                 </View>
                 <View style={styles.scoresWrapper}>
                     {points.map((end, i) => {
-                        return <ScoreInput setPoints={setPoints} {...end} end={i} editable={i + 1 === points.length} key={i} />;
+                        return <ScoreRow setPoints={setPoints} {...end} end={i} editable={i === points.length - 1} key={i} />;
                     })}
                 </View>
             </View>

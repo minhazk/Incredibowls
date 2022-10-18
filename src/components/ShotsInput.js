@@ -16,7 +16,7 @@ const ShotsInput = ({ team, shots, setPoints, editable }) => {
                     prev[prev.length - 1] = {
                         ...prevScore,
                         [`t${team}Points`]: value,
-                        [`t${team}Total`]: (team === '1' ? prevScore.t1Total : prevScore.t2Total) + Number(value),
+                        [`t${team}Total`]: prevScore[`t${team}Total`] + Number(value),
                     };
                     return [
                         ...prev,
