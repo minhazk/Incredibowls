@@ -4,13 +4,13 @@ import { colours } from '../styles/global';
 import ShotsInput from './ShotsInput';
 
 const ScoreRow = ({ points, setPoints, team1Shot, team2Shot, end }) => {
-    const [team1Total, setTeam1Total] = useState(0);
-    const [team2Total, setTeam2Total] = useState(0);
+    const [total, setTotal] = useState({});
 
     const handleTotal = () => {
-        setTeam1Total(points.slice(0, end).reduce((prev, curr) => curr.team1Shot + prev, 0));
-        setTeam2Total(points.slice(0, end).reduce((prev, curr) => curr.team2Shot + prev, 0));
-        return { team1Total, team2Total };
+        const pointsToEnd = points.slice(0, end + 1);
+        const team1 = pointsToEnd.reduce((prev, curr) => curr.team1Shot + prev, 0);
+        const team2 = pointsToEnd.reduce((prev, curr) => curr.team2Shot + prev, 0);
+        setTotal({ team1, team2 });
     };
 
     useEffect(() => {
@@ -25,13 +25,13 @@ const ScoreRow = ({ points, setPoints, team1Shot, team2Shot, end }) => {
         <View style={styles.row}>
             <ShotsInput team='1' end={end} shot={points[end].team1Shot} points={points} setPoints={setPoints} />
 
-            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={team1Total.toString()} />
+            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={total?.team1?.toString()} />
 
             <Text style={styles.endLabel}>{end + 1}</Text>
 
             <ShotsInput team='2' end={end} shot={points[end].team2Shot} points={points} setPoints={setPoints} />
 
-            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={team2Total.toString()} />
+            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={total?.team2?.toString()} />
         </View>
     );
 };
