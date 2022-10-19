@@ -8,8 +8,24 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 const Board = () => {
     const [points, setPoints] = useState([
         {
-            team1Shot: 0,
+            team1Shot: 7,
             team2Shot: 0,
+        },
+        {
+            team1Shot: 10,
+            team2Shot: 0,
+        },
+        {
+            team1Shot: 3,
+            team2Shot: 0,
+        },
+        {
+            team1Shot: 0,
+            team2Shot: 5,
+        },
+        {
+            team1Shot: 0,
+            team2Shot: 4,
         },
     ]);
 
@@ -30,10 +46,24 @@ const Board = () => {
         },
     }; // going to be coming from context
 
+    const getScoreArrays = () => {
+        return {
+            team1Scores: points.map(point => point.team1Shot),
+            team2Scores: points.map(point => point.team2Shot),
+        };
+    };
+
+    const getGameData = () => {
+        return {
+            id: 1,
+            // competition: game.com
+        };
+    };
+
     return (
         <SafeAreaView style={screen.page}>
             <KeyboardAwareScrollView>
-                <View style={styles.infoContainer}>
+                <View style={{ ...styles.infoContainer, ...screen.topGap }}>
                     <View style={styles.row}>
                         <Text style={styles.label}>Competition</Text>
                         <Text style={styles.data}>{dummyBoard.competition}</Text>

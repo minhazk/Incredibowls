@@ -16,7 +16,7 @@ const FormStack = createNativeStackNavigator();
 const FormStackScreen = () => {
     return (
         <FormStack.Navigator>
-            <FormStack.Screen name='Create' component={Create} />
+            <FormStack.Screen name='GameForm' component={Create} />
             <FormStack.Screen name='PlayerForm' component={PlayerForm} />
         </FormStack.Navigator>
     );

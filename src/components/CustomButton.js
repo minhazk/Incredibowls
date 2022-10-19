@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'white',
+        marginVertical: 5,
     },
     label: {
         color: colours.secondary,

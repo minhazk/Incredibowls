@@ -17,7 +17,10 @@ const screen = StyleSheet.create({
         backgroundColor: colours.primary,
         flex: 1,
         padding: 20,
-        paddingBottom: 0,
+        paddingTop: 0,
+    },
+    topGap: {
+        marginTop: 15,
     },
 });
 

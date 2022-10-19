@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { colours, defaultButtonStyles } from '../styles/global';
 import { getShortDate } from '../utils/DateFormatter';
 import CustomButton from './CustomButton';
