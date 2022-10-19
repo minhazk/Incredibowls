@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
 import ScoreRow from '../components/ScoreRow';
 import { colours, screen } from '../styles/global';
 import { getLongDate } from '../utils/DateFormatter';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const Board = () => {
     const [points, setPoints] = useState([
@@ -30,66 +31,66 @@ const Board = () => {
     }; // going to be coming from context
 
     return (
-        <View style={screen.page}>
-            <View style={styles.infoContainer}>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Competition</Text>
-                    <Text style={styles.data}>{dummyBoard.competition}</Text>
-                </View>
-                <View style={styles.row}>
+        <SafeAreaView style={screen.page}>
+            <KeyboardAwareScrollView>
+                <View style={styles.infoContainer}>
                     <View style={styles.row}>
-                        <Text style={styles.label}>Date</Text>
-                        <Text style={styles.data}>{getLongDate(dummyBoard.rink)}</Text>
+                        <Text style={styles.label}>Competition</Text>
+                        <Text style={styles.data}>{dummyBoard.competition}</Text>
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.label}>Rink</Text>
-                        <Text style={styles.data}>{dummyBoard.rink}</Text>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Date</Text>
+                            <Text style={styles.data}>{getLongDate(dummyBoard.rink)}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Rink</Text>
+                            <Text style={styles.data}>{dummyBoard.rink}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.teamOneName}>{dummyBoard.teamOne.name}</Text>
+                        <Text style={styles.playerCount}>vs</Text>
+                        <Text style={styles.teamTwoName}>{dummyBoard.teamTwo.name}</Text>
                     </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.teamOneName}>{dummyBoard.teamOne.name}</Text>
-                    <Text style={styles.playerCount}>vs</Text>
-                    <Text style={styles.teamTwoName}>{dummyBoard.teamTwo.name}</Text>
-                </View>
-            </View>
 
-            <View style={styles.infoContainer}>
-                <View>
-                    {dummyBoard.teamOne.players.map((player, i) => {
-                        return (
-                            <View style={styles.row} key={i}>
-                                <Text style={styles.teamOneName}>{player}</Text>
-                                <Text style={styles.playerCount}>{i + 1}</Text>
-                                <Text style={styles.teamTwoName}>{dummyBoard.teamTwo.players[i]}</Text>
-                            </View>
-                        );
-                    })}
+                <View style={styles.infoContainer}>
+                    <View>
+                        {dummyBoard.teamOne.players.map((player, i) => {
+                            return (
+                                <View style={styles.row} key={i}>
+                                    <Text style={styles.teamOneName}>{player}</Text>
+                                    <Text style={styles.playerCount}>{i + 1}</Text>
+                                    <Text style={styles.teamTwoName}>{dummyBoard.teamTwo.players[i]}</Text>
+                                </View>
+                            );
+                        })}
+                    </View>
                 </View>
-            </View>
+                <View style={styles.infoContainer}>
+                    <View style={styles.row}>
+                        <Text style={styles.scoreLabel}>SHOTS</Text>
+                        <Text style={styles.scoreLabel}>TOTAL</Text>
+                        <Text style={styles.scoreLabel}>END</Text>
+                        <Text style={styles.scoreLabel}>SHOTS</Text>
+                        <Text style={styles.scoreLabel}>TOTAL</Text>
+                    </View>
 
-            <View style={styles.infoContainer}>
-                <View style={styles.row}>
-                    <Text style={styles.scoreLabel}>SHOTS</Text>
-                    <Text style={styles.scoreLabel}>TOTAL</Text>
-                    <Text style={styles.scoreLabel}>END</Text>
-                    <Text style={styles.scoreLabel}>SHOTS</Text>
-                    <Text style={styles.scoreLabel}>TOTAL</Text>
+                    <View style={styles.scoresWrapper}>
+                        {points.map((end, i) => {
+                            return <ScoreRow points={points} setPoints={setPoints} {...end} end={i} key={i} />;
+                        })}
+                    </View>
                 </View>
-                <View style={styles.scoresWrapper}>
-                    {points.map((end, i) => {
-                        return <ScoreRow points={points} setPoints={setPoints} {...end} end={i} key={i} />;
-                    })}
-                    {console.log(points)}
+                <View style={styles.infoContainer}>
+                    <View style={styles.totalsContainer}>
+                        <Text style={styles.totalCount}>Total: {points.reduce((prev, curr) => curr.team1Shot + prev, 0)}</Text>
+                        <Text style={styles.totalCount}>Total: {points.reduce((prev, curr) => curr.team2Shot + prev, 0)}</Text>
+                    </View>
                 </View>
-            </View>
-
-            <View style={styles.infoContainer}>
-                <View style={styles.totalsContainer}>
-                    <Text style={styles.totalCount}>Total: {points.reduce((prev, curr) => curr.team1Shot + prev, 0)}</Text>
-                    <Text style={styles.totalCount}>Total: {points.reduce((prev, curr) => curr.team2Shot + prev, 0)}</Text>
-                </View>
-            </View>
-        </View>
+            </KeyboardAwareScrollView>
+        </SafeAreaView>
     );
 };
 
@@ -144,6 +145,9 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
         fontWeight: 'bold',
+    },
+    page: {
+        height: '100%',
     },
 });
 

@@ -4,13 +4,17 @@ import { getShortDate } from '../utils/DateFormatter';
 import CustomButton from './CustomButton';
 
 const GameCard = ({ navigation, competition, date, rink, teamOne, teamTwo }) => {
+    const calculateTotal = arr => {
+        return arr.reduce((prev, curr) => Number(curr) + prev, 0);
+    };
+
     return (
         <View style={styles.gameCardContainer}>
             <View style={styles.teamsContainer}>
                 <Text style={styles.teamOneLabel}>{teamOne.name}</Text>
                 <View style={styles.scoresContainer}>
                     <Text style={styles.score}>
-                        {teamOne.score} - {teamTwo.score}
+                        {calculateTotal(teamOne.scores)} - {calculateTotal(teamTwo.scores)}
                     </Text>
                     <Text style={styles.date}>{getShortDate(date)}</Text>
                 </View>

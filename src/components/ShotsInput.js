@@ -1,20 +1,18 @@
-import { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { colours } from '../styles/global';
 
-const ShotsInput = ({ team, shot, points, setPoints, end }) => {
-    const [value, setValue] = useState(shot);
-
-    const handleInput = () => {
+const ShotsInput = ({ team, shot, setPoints, end }) => {
+    const handleInput = e => {
+        const value = e.nativeEvent.text;
         if (!value) return;
         setPoints(prev => {
             prev[end][`team${team}Shot`] = Number(value);
             prev[end][`team${team === 1 ? '2' : '1'}Shot`] = 0;
-            return end === points.length - 1 ? [...prev, { team1Shot: 0, team2Shot: 0 }] : [...prev];
+            return end === prev.length - 1 ? [...prev, { team1Shot: 0, team2Shot: 0 }] : [...prev];
         });
     };
 
-    return <TextInput value={value} onChangeText={setValue} onEndEditing={handleInput} style={styles.scoreInput} keyboardType='numeric' placeholder='0' />;
+    return <TextInput defaultValue={shot.toString()} onEndEditing={handleInput} style={styles.scoreInput} keyboardType='numeric' placeholder='0' />;
 };
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import GameCard from '../components/GameCard';
 import { screen } from '../styles/global';
 
@@ -12,124 +12,12 @@ const Home = ({ navigation }) => {
             teamOne: {
                 name: 'Team One',
                 players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 20,
+                scores: [2, 3, 4, 5],
             },
             teamTwo: {
                 name: 'Team Two',
                 players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 22,
-            },
-        },
-        {
-            id: 2,
-            competition: 'Competition',
-            date: new Date(),
-            rink: 1,
-            teamOne: {
-                name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 18,
-            },
-            teamTwo: {
-                name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 21,
-            },
-        },
-        {
-            id: 23,
-            competition: 'Competition',
-            date: new Date(),
-            rink: 1,
-            teamOne: {
-                name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 18,
-            },
-            teamTwo: {
-                name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 21,
-            },
-        },
-        {
-            id: 24,
-            competition: 'Competition',
-            date: new Date(),
-            rink: 1,
-            teamOne: {
-                name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 18,
-            },
-            teamTwo: {
-                name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 21,
-            },
-        },
-        {
-            id: 25,
-            competition: 'Competition',
-            date: new Date(),
-            rink: 1,
-            teamOne: {
-                name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 18,
-            },
-            teamTwo: {
-                name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 21,
-            },
-        },
-        {
-            id: 26,
-            competition: 'Competition',
-            date: new Date(),
-            rink: 1,
-            teamOne: {
-                name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 18,
-            },
-            teamTwo: {
-                name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 21,
-            },
-        },
-        {
-            id: 27,
-            competition: 'Competition',
-            date: new Date(),
-            rink: 1,
-            teamOne: {
-                name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 18,
-            },
-            teamTwo: {
-                name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 21,
-            },
-        },
-        {
-            id: 28,
-            competition: 'Competition',
-            date: new Date(),
-            rink: 1,
-            teamOne: {
-                name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 18,
-            },
-            teamTwo: {
-                name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                score: 21,
+                scores: [3, 4, 5, 6],
             },
         },
     ];

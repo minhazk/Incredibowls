@@ -19,15 +19,15 @@ const ScoreRow = ({ points, setPoints, team1Shot, team2Shot, end }) => {
 
     return (
         <View style={styles.row}>
-            <ShotsInput team={1} end={end} shot={points[end].team1Shot} points={points} setPoints={setPoints} />
+            <ShotsInput team={1} end={end} shot={team1Shot} setPoints={setPoints} />
 
-            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={total?.team1?.toString()} />
+            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' defaultValue={total?.team1?.toString()} />
 
             <Text style={styles.endLabel}>{end + 1}</Text>
 
-            <ShotsInput team={2} end={end} shot={points[end].team2Shot} points={points} setPoints={setPoints} />
+            <ShotsInput team={2} end={end} shot={team2Shot} setPoints={setPoints} />
 
-            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' value={total?.team2?.toString()} />
+            <TextInput editable={false} style={styles.scoreInput} keyboardType='numeric' defaultValue={total?.team2?.toString()} />
         </View>
     );
 };
