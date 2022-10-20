@@ -9,7 +9,6 @@ import { GameContextProvider } from './src/context/GameContext';
 import { colours } from './src/styles/global';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PlayerForm from './src/screens/PlayerForm';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const FormStack = createNativeStackNavigator();
 

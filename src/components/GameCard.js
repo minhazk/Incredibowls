@@ -1,11 +1,24 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { useGameContext } from '../context/GameContext';
 import { colours, defaultButtonStyles } from '../styles/global';
 import { getShortDate } from '../utils/DateFormatter';
 import CustomButton from './CustomButton';
 
-const GameCard = ({ navigation, competition, date, rink, teamOne, teamTwo }) => {
+const GameCard = ({ navigation, id, competition, date, rink, teamOne, teamTwo }) => {
+    const { setCurrentGameID, deleteGame } = useGameContext();
+
     const calculateTotal = arr => {
+        return 1;
         return arr.reduce((prev, curr) => Number(curr) + prev, 0);
+    };
+
+    const handleEdit = () => {
+        setCurrentGameID(id);
+        navigation.navigate('Board');
+    };
+
+    const handleDelete = () => {
+        deleteGame(id);
     };
 
     return (
@@ -23,8 +36,8 @@ const GameCard = ({ navigation, competition, date, rink, teamOne, teamTwo }) => 
             <Text style={styles.competition}>{competition}</Text>
             <Text style={styles.rink}>Rink {rink}</Text>
             <View style={styles.buttonsContainer}>
-                <CustomButton label='Delete' style={styles.deleteBtn} />
-                <CustomButton label='Edit' onPress={() => navigation.navigate('Search')} style={styles.editBtn} />
+                <CustomButton label='Delete' onPress={handleDelete} style={styles.deleteBtn} />
+                <CustomButton label='Edit' onPress={handleEdit} style={styles.editBtn} />
             </View>
         </View>
     );

@@ -1,9 +1,12 @@
-import { useContext, createContext, useReducer } from 'react';
+import { useContext, createContext, useReducer, useState } from 'react';
+import uuid from 'react-native-uuid';
 
 const ACTIONS = {
     create: 'Create',
     delete: 'Delete',
     update: 'Update',
+    updatePlayers: 'Update Players',
+    updatePoint: 'Update Point',
 };
 
 const GameContext = createContext({});
@@ -13,13 +16,25 @@ const reducer = (state, action) => {
     switch (action.type) {
         case ACTIONS.create:
             return [...state, action.payload];
-        case ACTIONS.update:
-            return state.map(item => {
-                if (e.id === action.payload.id) return { ...item, ...action.payload };
-                return item;
-            });
         case ACTIONS.delete:
-            return state.filter(e => e.id !== action.payload.id);
+            return state.filter(game => game.id !== action.payload.id);
+        case ACTIONS.updatePlayers:
+            return state.map(game => {
+                if (game.id !== action.payload.currentGameID) return game;
+                const { teamOnePlayers, teamTwoPlayers } = action.payload.players;
+                game.teamOne.players = teamOnePlayers;
+                game.teamTwo.players = teamTwoPlayers;
+                return game;
+            });
+        case ACTIONS.updatePoint:
+            return state.map(game => {
+                if (game.id !== action.payload.currentGameID) return game;
+                const { end, team, point } = action.payload;
+                game.points[end][`team${team}Shot`] = point;
+                game.points[end][`team${team === 1 ? '2' : '1'}Shots`] = 0;
+                game.points = end === game.points.length - 1 ? [...game.points, { team1Shot: 0, team2Shot: 0 }] : game.points;
+                return game;
+            });
         default:
             return state;
     }
@@ -35,13 +50,17 @@ export const GameContextProvider = ({ children }) => {
             teamOne: {
                 name: 'Team One',
                 players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                scores: [2, 3, 4, 5],
             },
             teamTwo: {
                 name: 'Team Two',
                 players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                scores: [3, 4, 5, 6],
             },
+            points: [
+                {
+                    team1Shot: 0,
+                    team2Shot: 0,
+                },
+            ],
         },
         {
             id: 2,
@@ -51,29 +70,50 @@ export const GameContextProvider = ({ children }) => {
             teamOne: {
                 name: 'Team One',
                 players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                scores: [2, 3, 4, 5],
             },
             teamTwo: {
                 name: 'Team Two',
                 players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-                scores: [3, 4, 5, 6],
             },
+            points: [
+                {
+                    team1Shot: 0,
+                    team2Shot: 0,
+                },
+            ],
         },
     ]);
-    //usestate 4 current game
-    //action 4 each task
+    const [currentGameID, setCurrentGameID] = useState();
 
-    const createGame = data => {
-        dispatch({ type: ACTIONS.create, payload: data });
+    const createGame = gameInfo => {
+        const newGame = {
+            id: uuid.v4(),
+            ...gameInfo,
+            date: new Date(), // until date input is implemented
+        };
+        setCurrentGameID(newGame.id);
+        dispatch({ type: ACTIONS.create, payload: newGame });
     };
 
-    const updateGame = data => {
-        dispatch({ type: ACTIONS.update, payload: data });
+    const getCurrentGame = () => {
+        return games.find(game => game.id === currentGameID);
+    };
+
+    const updatePlayers = players => {
+        dispatch({ type: ACTIONS.updatePlayers, payload: { currentGameID, players } });
     };
 
     const deleteGame = id => {
         dispatch({ type: ACTIONS.delete, payload: { id } });
     };
 
-    return <GameContext.Provider value={{ games, createGame, updateGame, deleteGame }}>{children}</GameContext.Provider>;
+    const updatePoint = (end, team, point) => {
+        dispatch({ type: ACTIONS.updatePoint, payload: { currentGameID, end, team, point } });
+    };
+
+    const updateGame = data => {
+        dispatch({ type: ACTIONS.update, payload: data });
+    };
+
+    return <GameContext.Provider value={{ games, createGame, currentGameID, setCurrentGameID, getCurrentGame, updatePlayers, deleteGame, updatePoint }}>{children}</GameContext.Provider>;
 };

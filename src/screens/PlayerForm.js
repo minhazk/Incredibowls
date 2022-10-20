@@ -7,13 +7,13 @@ import { screen } from '../styles/global';
 
 const MAX_TEAM_SIZE = 4;
 
-const PlayerForm = ({ route }) => {
-    const { teamOne, teamTwo, ...info } = route.params;
+const PlayerForm = ({ navigation }) => {
+    const { getCurrentGame, updatePlayers } = useGameContext();
+    const { teamOne, teamTwo } = getCurrentGame();
     const [players, setPlayers] = useState({
         teamOnePlayers: [],
         teamTwoPlayers: [],
     });
-    const { createGame } = useGameContext();
 
     const handleTeamOneInput = (key, value) => {
         setPlayers(prev => {
@@ -29,39 +29,24 @@ const PlayerForm = ({ route }) => {
         });
     };
 
-    const handleCreateGame = () => {
-        const newGame = {
-            id: 8761,
-            ...info,
-            date: new Date(),
-            teamOne: {
-                name: teamOne,
-                players: players.teamOnePlayers,
-                scores: [0],
-            },
-            teamTwo: {
-                name: teamTwo,
-                players: players.teamTwoPlayers,
-                scores: [0],
-            },
-        };
-
-        createGame(newGame);
+    const handleUpdatePlayers = () => {
+        updatePlayers(players);
+        navigation.navigate('Board');
     };
 
     return (
         <ScrollView>
             <View style={screen.page}>
                 <View>
-                    <Text style={styles.teamHeader}>Team 1: {teamOne}</Text>
+                    <Text style={styles.teamHeader}>Team 1: {teamOne.name}</Text>
                     {Array.from({ length: MAX_TEAM_SIZE }).map((x, i) => {
                         return <FormInput onChange={handleTeamOneInput} objectKey={i} label={`Player ${i + 1}`} key={i} />;
                     })}
-                    <Text style={styles.teamHeader}>Team 2: {teamTwo}</Text>
+                    <Text style={styles.teamHeader}>Team 2: {teamTwo.name}</Text>
                     {Array.from({ length: MAX_TEAM_SIZE }).map((x, i) => {
                         return <FormInput onChange={handleTeamTwoInput} objectKey={i} label={`Player ${i + 1}`} key={i} />;
                     })}
-                    <CustomButton label='Create Team' onPress={handleCreateGame} />
+                    <CustomButton label='Create Team' onPress={handleUpdatePlayers} />
                 </View>
             </View>
         </ScrollView>
