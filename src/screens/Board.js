@@ -8,24 +8,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 const Board = () => {
     const [points, setPoints] = useState([
         {
-            team1Shot: 7,
-            team2Shot: 0,
-        },
-        {
-            team1Shot: 10,
-            team2Shot: 0,
-        },
-        {
-            team1Shot: 3,
-            team2Shot: 0,
-        },
-        {
             team1Shot: 0,
-            team2Shot: 5,
-        },
-        {
-            team1Shot: 0,
-            team2Shot: 4,
+            team2Shot: 0,
         },
     ]);
 

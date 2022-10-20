@@ -18,13 +18,13 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         paddingTop: 10,
-        paddingBottom: 5,
+        paddingBottom: 10,
         paddingHorizontal: 15,
         borderRadius: 10,
         marginBottom: 10,
     },
     input: {
-        paddingVertical: 1.5,
+        paddingVertical: 1,
         color: 'black',
         borderRadius: 5,
         fontSize: 12,

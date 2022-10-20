@@ -5,6 +5,7 @@ const ShotsInput = ({ team, shot, setPoints, end }) => {
     const handleInput = e => {
         const value = e.nativeEvent.text;
         if (!value) return;
+        // if (Number(value) < 0) return;
         setPoints(prev => {
             prev[end][`team${team}Shot`] = Number(value);
             prev[end][`team${team === 1 ? '2' : '1'}Shot`] = 0;

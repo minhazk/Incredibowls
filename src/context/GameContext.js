@@ -60,6 +60,8 @@ export const GameContextProvider = ({ children }) => {
             },
         },
     ]);
+    //usestate 4 current game
+    //action 4 each task
 
     const createGame = data => {
         dispatch({ type: ACTIONS.create, payload: data });
