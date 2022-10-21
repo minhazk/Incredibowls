@@ -1,16 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useGameContext } from '../context/GameContext';
 import { colours } from '../styles/global';
 
-const BoardPlayers = ({ teamOnePlayers, teamTwoPlayers }) => {
+const BoardPlayers = ({ team1Players, team2Players }) => {
+    const { updatePlayer } = useGameContext();
+
     return (
         <View style={styles.infoContainer}>
-            {teamOnePlayers.map((player, i) => {
+            {team1Players.map((player, i) => {
                 return (
                     <View style={styles.row} key={i}>
-                        <TextInput defaultValue={player} style={styles.playerInput} />
+                        <TextInput defaultValue={player} onChangeText={text => updatePlayer('1', i, text)} style={styles.playerInput} />
                         <Text style={styles.playerCount}>{i + 1}</Text>
-                        <TextInput defaultValue={teamTwoPlayers[i]} style={{ ...styles.playerInput, ...styles.teamTwoPlayer }} />
+                        <TextInput defaultValue={team2Players[i]} onChangeText={text => updatePlayer('2', i, text)} style={{ ...styles.playerInput, ...styles.team2Player }} />
                     </View>
                 );
             })}
@@ -31,18 +34,18 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
     },
     playerInput: {
-        color: colours.teamOne,
+        color: colours.team1,
         flex: 1,
         borderWidth: 1,
         borderColor: colours.lightGray,
         borderRadius: 2.5,
-        paddingVertical: 3,
+        paddingVertical: 2,
         paddingHorizontal: 7,
-        fontSize: 13,
+        fontSize: 15,
         textAlign: 'center',
     },
-    teamTwoPlayer: {
-        color: colours.teamTwo,
+    team2Player: {
+        color: colours.team2,
     },
     playerCount: {
         marginHorizontal: 10,

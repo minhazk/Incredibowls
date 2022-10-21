@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native';
 const colours = {
     primary: '#553E97',
     secondary: '#fff',
-    teamOne: '#5F92F5',
-    teamTwo: '#FF7575',
+    team1: '#5F92F5',
+    team2: '#FF7575',
     danger: '#EA5656',
     accent: '#423077',
     lightGray: '#A5A0A0',
@@ -16,8 +16,7 @@ const screen = StyleSheet.create({
     page: {
         backgroundColor: colours.primary,
         flex: 1,
-        padding: 20,
-        paddingTop: 0,
+        paddingHorizontal: 20,
     },
     topGap: {
         marginTop: 15,

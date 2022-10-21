@@ -4,8 +4,8 @@ import { colours, defaultButtonStyles } from '../styles/global';
 import { getShortDate } from '../utils/DateFormatter';
 import CustomButton from './CustomButton';
 
-const GameCard = ({ navigation, id, competition, date, rink, teamOne, teamTwo }) => {
-    const { setCurrentGameID, getFinalScore, deleteGame } = useGameContext();
+const GameCard = ({ navigation, id, competition, date, rink, team1, team2 }) => {
+    const { currentGameID, setCurrentGameID, getFinalScore, deleteGame } = useGameContext();
     const { team1Score, team2Score } = getFinalScore(id);
 
     const handleEdit = () => {
@@ -14,20 +14,21 @@ const GameCard = ({ navigation, id, competition, date, rink, teamOne, teamTwo })
     };
 
     const handleDelete = () => {
+        if (currentGameID === id) setCurrentGameID(null);
         deleteGame(id);
     };
 
     return (
         <View style={styles.gameCardContainer}>
             <View style={styles.teamsContainer}>
-                <Text style={styles.teamOneLabel}>{teamOne.name}</Text>
+                <Text style={styles.team1Label}>{team1.name}</Text>
                 <View style={styles.scoresContainer}>
                     <Text style={styles.score}>
                         {team1Score} - {team2Score}
                     </Text>
                     <Text style={styles.date}>{getShortDate(date)}</Text>
                 </View>
-                <Text style={styles.teamTwoLabel}>{teamTwo.name}</Text>
+                <Text style={styles.team2Label}>{team2.name}</Text>
             </View>
             <Text style={styles.competition}>{competition}</Text>
             <Text style={styles.rink}>Rink {rink}</Text>
@@ -51,12 +52,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    teamOneLabel: {
-        color: colours.teamOne,
+    team1Label: {
+        color: colours.team1,
         fontWeight: 'bold',
     },
-    teamTwoLabel: {
-        color: colours.teamTwo,
+    team2Label: {
+        color: colours.team2,
         fontWeight: 'bold',
     },
     scoresContainer: {

@@ -19,13 +19,13 @@ const Board = ({ navigation }) => {
         );
     }
     const game = getCurrentGame();
-    const { teamOne, teamTwo, points } = game;
+    const { team1, team2, points } = game;
 
     return (
         <SafeAreaView style={screen.page}>
             <KeyboardAwareScrollView>
                 <GameInfo {...game} />
-                <BoardPlayers teamOnePlayers={teamOne.players} teamTwoPlayers={teamTwo.players} />
+                <BoardPlayers team1Players={team1.players} team2Players={team2.players} />
 
                 <View style={styles.infoContainer}>
                     <View style={styles.row}>

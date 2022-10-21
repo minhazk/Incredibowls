@@ -5,8 +5,10 @@ const ACTIONS = {
     create: 'Create',
     delete: 'Delete',
     update: 'Update',
-    updatePlayers: 'Update Players',
     updatePoint: 'Update Point',
+    updateGameInfo: 'Update Game Info',
+    updateTeamName: 'Update Team Name',
+    updatePlayer: 'Update Player',
 };
 
 const GameContext = createContext({});
@@ -18,14 +20,6 @@ const reducer = (state, action) => {
             return [...state, action.payload];
         case ACTIONS.delete:
             return state.filter(game => game.id !== action.payload.id);
-        case ACTIONS.updatePlayers:
-            return state.map(game => {
-                if (game.id !== action.payload.currentGameID) return game;
-                const { teamOnePlayers, teamTwoPlayers } = action.payload.players;
-                game.teamOne.players = teamOnePlayers;
-                game.teamTwo.players = teamTwoPlayers;
-                return game;
-            });
         case ACTIONS.updatePoint:
             return state.map(game => {
                 if (game.id !== action.payload.currentGameID) return game;
@@ -33,6 +27,26 @@ const reducer = (state, action) => {
                 game.points[end][`team${team}Shot`] = Number(point);
                 game.points[end][`team${team === 1 ? '2' : '1'}Shot`] = 0;
                 game.points = end === game.points.length - 1 ? [...game.points, { team1Shot: 0, team2Shot: 0 }] : game.points;
+                return { ...game };
+            });
+        case ACTIONS.updateGameInfo:
+            return state.map(game => {
+                if (game.id !== action.payload.currentGameID) return game;
+                const { objectKey, value } = action.payload;
+                return { ...game, [objectKey]: value };
+            });
+        case ACTIONS.updateTeamName:
+            return state.map(game => {
+                if (game.id !== action.payload.currentGameID) return game;
+                const { teamNo, name } = action.payload;
+                game[`team${teamNo}`].name = name;
+                return { ...game };
+            });
+        case ACTIONS.updatePlayer:
+            return state.map(game => {
+                if (game.id !== action.payload.currentGameID) return game;
+                const { teamNo, playerNo, name } = action.payload;
+                game[`team${teamNo}`].players[playerNo] = name;
                 return { ...game };
             });
         default:
@@ -47,11 +61,11 @@ export const GameContextProvider = ({ children }) => {
             competition: 'Competition',
             date: new Date(),
             rink: 4,
-            teamOne: {
+            team1: {
                 name: 'Team One',
                 players: ['Player 1', 'Player 2', 'Player 3', 'Player 4'],
             },
-            teamTwo: {
+            team2: {
                 name: 'Team Two',
                 players: ['Player 1', 'Player 2', 'Player 3', 'Player 4'],
             },
@@ -71,13 +85,13 @@ export const GameContextProvider = ({ children }) => {
             competition: 'Competition',
             date: new Date(),
             rink: 3,
-            teamOne: {
+            team1: {
                 name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
+                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4'],
             },
-            teamTwo: {
+            team2: {
                 name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
+                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4'],
             },
             points: [
                 {
@@ -93,6 +107,7 @@ export const GameContextProvider = ({ children }) => {
         const newGame = {
             id: uuid.v4(),
             ...gameInfo,
+            points: [{ team1Shot: 0, team2Shot: 0 }],
             date: new Date(), // until date input is implemented
         };
         setCurrentGameID(newGame.id);
@@ -104,10 +119,6 @@ export const GameContextProvider = ({ children }) => {
     };
 
     const findGame = id => games.find(game => game.id === id);
-
-    const updatePlayers = players => {
-        dispatch({ type: ACTIONS.updatePlayers, payload: { currentGameID, players } });
-    };
 
     const deleteGame = id => {
         dispatch({ type: ACTIONS.delete, payload: { id } });
@@ -135,8 +146,38 @@ export const GameContextProvider = ({ children }) => {
         return getCurrentGame().points[end][`team${team}Shot`];
     };
 
+    const updateGameInfo = (objectKey, value) => {
+        dispatch({ type: ACTIONS.updateGameInfo, payload: { currentGameID, objectKey, value } });
+    };
+
+    const updateTeamName = (teamNo, name) => {
+        dispatch({ type: ACTIONS.updateTeamName, payload: { currentGameID, teamNo, name } });
+    };
+
+    const updatePlayer = (teamNo, playerNo, name) => {
+        dispatch({ type: ACTIONS.updatePlayer, payload: { currentGameID, teamNo, playerNo, name } });
+    };
+
+    console.log(getCurrentGame());
+
     return (
-        <GameContext.Provider value={{ games, createGame, currentGameID, setCurrentGameID, getCurrentGame, updatePlayers, deleteGame, updatePoint, getTotal, getFinalScore, getCurrentShot }}>
+        <GameContext.Provider
+            value={{
+                games,
+                createGame,
+                currentGameID,
+                setCurrentGameID,
+                getCurrentGame,
+                deleteGame,
+                updatePoint,
+                getTotal,
+                getFinalScore,
+                getCurrentShot,
+                updateGameInfo,
+                updateTeamName,
+                updatePlayer,
+            }}
+        >
             {children}
         </GameContext.Provider>
     );

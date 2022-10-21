@@ -1,29 +1,32 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useGameContext } from '../context/GameContext';
 import { colours, screen } from '../styles/global';
 import { getLongDate } from '../utils/DateFormatter';
 
-const BoardGameInfo = ({ competition, date, rink, teamOne, teamTwo }) => {
+const BoardGameInfo = ({ competition, date, rink, team1, team2 }) => {
+    const { updateGameInfo, updateTeamName } = useGameContext();
+
     return (
         <View style={{ ...styles.infoContainer, ...screen.topGap }}>
             <View style={styles.row}>
                 <Text style={styles.label}>Competition</Text>
-                <TextInput defaultValue={competition} style={styles.input} />
+                <TextInput value={competition} onChangeText={text => updateGameInfo('competition', text)} style={styles.input} />
             </View>
             <View style={styles.row}>
                 <View style={styles.row}>
                     <Text style={styles.label}>Date</Text>
-                    <TextInput defaultValue={getLongDate(date)} style={styles.input} />
+                    <TextInput value={getLongDate(date)} onChangeText={text => updateGameInfo('date', text)} style={styles.input} />
                 </View>
                 <View style={styles.row}>
                     <Text style={{ ...styles.label, ...styles.rinkLabel }}>Rink</Text>
-                    <TextInput defaultValue={rink.toString()} style={styles.input} />
+                    <TextInput value={rink.toString()} onChangeText={text => updateGameInfo('rink', text)} style={styles.input} />
                 </View>
             </View>
             <View style={styles.row}>
-                <TextInput defaultValue={teamOne.name} style={styles.teamName} />
+                <TextInput value={team1.name} onChangeText={text => updateTeamName('1', text)} style={styles.teamName} />
                 <Text style={styles.vs}>vs</Text>
-                <TextInput defaultValue={teamTwo.name} style={{ ...styles.teamName, ...styles.teamTwoName }} />
+                <TextInput value={team2.name} onChangeText={text => updateTeamName('2', text)} style={{ ...styles.teamName, ...styles.team2Name }} />
             </View>
         </View>
     );
@@ -56,13 +59,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colours.lightGray,
         color: colours.mediumGray,
-        paddingVertical: 1,
+        paddingVertical: 2,
         paddingHorizontal: 10,
         borderRadius: 2.5,
         flex: 1,
     },
     teamName: {
-        color: colours.teamOne,
+        color: colours.team1,
         flex: 1,
         fontWeight: 'bold',
         borderWidth: 1,
@@ -72,8 +75,8 @@ const styles = StyleSheet.create({
         borderRadius: 2.5,
         textAlign: 'center',
     },
-    teamTwoName: {
-        color: colours.teamTwo,
+    team2Name: {
+        color: colours.team2,
         // textAlign: 'right',
     },
     vs: {

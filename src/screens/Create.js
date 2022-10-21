@@ -4,11 +4,10 @@ import CustomButton from '../components/CustomButton';
 import FormInput from '../components/FormInput';
 import { useGameContext } from '../context/GameContext';
 import { screen } from '../styles/global';
-import uuid from 'react-native-uuid';
 
 const Create = ({ navigation }) => {
     const [gameInfo, setGameInfo] = useState({});
-    const { createGame, setCurrentGameID } = useGameContext();
+    const { createGame } = useGameContext();
 
     const updateGameInfo = (key, value) => {
         setGameInfo(prev => {
@@ -17,17 +16,15 @@ const Create = ({ navigation }) => {
     };
 
     const handleCreateGame = () => {
-        const required = ['competition', 'date', 'rink', 'teamOne', 'teamTwo'];
+        const required = ['competition', 'date', 'rink', 'team1', 'team2'];
         for (let entry of required) {
             if (!gameInfo[entry]) return alert(`Please provide a ${entry}`);
         }
-        const { competition, date, rink, teamOne, teamTwo } = gameInfo;
+        const { team1, team2, ...rest } = gameInfo;
         createGame({
-            competition,
-            date,
-            rink,
-            teamOne: { name: teamOne, players: [], scores: [0] },
-            teamTwo: { name: teamTwo, players: [], scores: [0] },
+            ...rest,
+            team1: { name: team1, players: [] },
+            team2: { name: team2, players: [] },
         });
         navigation.push('PlayerForm');
     };
@@ -35,11 +32,11 @@ const Create = ({ navigation }) => {
     return (
         <ScrollView style={screen.page}>
             <View style={screen.topGap}>
-                <FormInput label='Competition' onChange={updateGameInfo} objectKey='competition' />
-                <FormInput label='Date' onChange={updateGameInfo} objectKey='date' />
-                <FormInput label='Rink No' onChange={updateGameInfo} objectKey='rink' keyboardType='numeric' />
-                <FormInput label='Team One Name' onChange={updateGameInfo} objectKey='teamOne' />
-                <FormInput label='Team Two Name' onChange={updateGameInfo} objectKey='teamTwo' />
+                <FormInput label='Competition' onChange={text => updateGameInfo('competition', text)} />
+                <FormInput label='Date' onChange={text => updateGameInfo('date', text)} />
+                <FormInput label='Rink No' onChange={text => updateGameInfo('rink', text)} keyboardType='numeric' />
+                <FormInput label='Team One Name' onChange={text => updateGameInfo('team1', text)} />
+                <FormInput label='Team Two Name' onChange={text => updateGameInfo('team2', text)} />
                 <CustomButton label='Create Game' onPress={handleCreateGame} />
             </View>
         </ScrollView>
