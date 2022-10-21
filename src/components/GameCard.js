@@ -5,12 +5,8 @@ import { getShortDate } from '../utils/DateFormatter';
 import CustomButton from './CustomButton';
 
 const GameCard = ({ navigation, id, competition, date, rink, teamOne, teamTwo }) => {
-    const { setCurrentGameID, deleteGame } = useGameContext();
-
-    const calculateTotal = arr => {
-        return 1;
-        return arr.reduce((prev, curr) => Number(curr) + prev, 0);
-    };
+    const { setCurrentGameID, getFinalScore, deleteGame } = useGameContext();
+    const { team1Score, team2Score } = getFinalScore(id);
 
     const handleEdit = () => {
         setCurrentGameID(id);
@@ -27,7 +23,7 @@ const GameCard = ({ navigation, id, competition, date, rink, teamOne, teamTwo })
                 <Text style={styles.teamOneLabel}>{teamOne.name}</Text>
                 <View style={styles.scoresContainer}>
                     <Text style={styles.score}>
-                        {calculateTotal(teamOne.scores)} - {calculateTotal(teamTwo.scores)}
+                        {team1Score} - {team2Score}
                     </Text>
                     <Text style={styles.date}>{getShortDate(date)}</Text>
                 </View>

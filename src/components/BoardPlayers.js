@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { colours } from '../styles/global';
 
 const BoardPlayers = ({ teamOnePlayers, teamTwoPlayers }) => {
@@ -8,9 +8,9 @@ const BoardPlayers = ({ teamOnePlayers, teamTwoPlayers }) => {
             {teamOnePlayers.map((player, i) => {
                 return (
                     <View style={styles.row} key={i}>
-                        <Text style={styles.teamOnePlayer}>{player}</Text>
+                        <TextInput defaultValue={player} style={styles.playerInput} />
                         <Text style={styles.playerCount}>{i + 1}</Text>
-                        <Text style={styles.teamTwoPlayer}>{teamTwoPlayers[i]}</Text>
+                        <TextInput defaultValue={teamTwoPlayers[i]} style={{ ...styles.playerInput, ...styles.teamTwoPlayer }} />
                     </View>
                 );
             })}
@@ -30,19 +30,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 2,
     },
-    teamOnePlayer: {
+    playerInput: {
         color: colours.teamOne,
         flex: 1,
-        fontWeight: 'bold',
+        borderWidth: 1,
+        borderColor: colours.lightGray,
+        borderRadius: 2.5,
+        paddingVertical: 3,
+        paddingHorizontal: 7,
+        fontSize: 13,
+        textAlign: 'center',
     },
     teamTwoPlayer: {
         color: colours.teamTwo,
-        flex: 1,
-        fontWeight: 'bold',
-        textAlign: 'right',
     },
     playerCount: {
-        fontWeight: 'bold',
+        marginHorizontal: 10,
+        fontSize: 13,
     },
 });
 

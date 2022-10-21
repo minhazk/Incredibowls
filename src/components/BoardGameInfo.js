@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { colours, screen } from '../styles/global';
 import { getLongDate } from '../utils/DateFormatter';
 
@@ -8,22 +8,22 @@ const BoardGameInfo = ({ competition, date, rink, teamOne, teamTwo }) => {
         <View style={{ ...styles.infoContainer, ...screen.topGap }}>
             <View style={styles.row}>
                 <Text style={styles.label}>Competition</Text>
-                <Text style={styles.data}>{competition}</Text>
+                <TextInput defaultValue={competition} style={styles.input} />
             </View>
             <View style={styles.row}>
                 <View style={styles.row}>
                     <Text style={styles.label}>Date</Text>
-                    <Text style={styles.data}>{getLongDate(date)}</Text>
+                    <TextInput defaultValue={getLongDate(date)} style={styles.input} />
                 </View>
                 <View style={styles.row}>
-                    <Text style={styles.label}>Rink</Text>
-                    <Text style={styles.data}>{rink}</Text>
+                    <Text style={{ ...styles.label, ...styles.rinkLabel }}>Rink</Text>
+                    <TextInput defaultValue={rink.toString()} style={styles.input} />
                 </View>
             </View>
             <View style={styles.row}>
-                <Text style={styles.teamOneName}>{teamOne.name}</Text>
-                <Text style={styles.playerCount}>vs</Text>
-                <Text style={styles.teamTwoName}>{teamTwo.name}</Text>
+                <TextInput defaultValue={teamOne.name} style={styles.teamName} />
+                <Text style={styles.vs}>vs</Text>
+                <TextInput defaultValue={teamTwo.name} style={{ ...styles.teamName, ...styles.teamTwoName }} />
             </View>
         </View>
     );
@@ -40,30 +40,45 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 2,
+        flex: 1,
     },
     label: {
         color: colours.primary,
-        fontSize: 13,
+        fontSize: 15,
         marginRight: 10,
         fontWeight: 'bold',
     },
-    data: {
-        fontWeight: 'bold',
-        marginRight: 20,
+    rinkLabel: {
+        marginLeft: 15,
     },
-    teamOneName: {
+    input: {
+        fontSize: 15,
+        borderWidth: 1,
+        borderColor: colours.lightGray,
+        color: colours.mediumGray,
+        paddingVertical: 1,
+        paddingHorizontal: 10,
+        borderRadius: 2.5,
+        flex: 1,
+    },
+    teamName: {
         color: colours.teamOne,
         flex: 1,
         fontWeight: 'bold',
+        borderWidth: 1,
+        borderColor: colours.lightGray,
+        paddingVertical: 1,
+        paddingHorizontal: 10,
+        borderRadius: 2.5,
+        textAlign: 'center',
     },
     teamTwoName: {
         color: colours.teamTwo,
-        flex: 1,
-        fontWeight: 'bold',
-        textAlign: 'right',
+        // textAlign: 'right',
     },
-    playerCount: {
-        fontWeight: 'bold',
+    vs: {
+        // fontWeight: 'bold',
+        marginHorizontal: 7,
     },
 });
 

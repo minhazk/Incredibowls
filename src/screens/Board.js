@@ -1,16 +1,14 @@
-import { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import ScoreRow from '../components/ScoreRow';
-import { colours, screen } from '../styles/global';
-import { getLongDate } from '../utils/DateFormatter';
+import { screen } from '../styles/global';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useGameContext } from '../context/GameContext';
 import CustomButton from '../components/CustomButton';
-import BoardGameInfo from '../components/BoardGameInfo';
 import BoardPlayers from '../components/BoardPlayers';
+import GameInfo from '../components/BoardGameInfo';
 
 const Board = ({ navigation }) => {
-    const { currentGameID, getCurrentGame } = useGameContext();
+    const { currentGameID, getCurrentGame, getTotal } = useGameContext();
     if (!currentGameID) {
         return (
             <SafeAreaView style={screen.page}>
@@ -26,7 +24,7 @@ const Board = ({ navigation }) => {
     return (
         <SafeAreaView style={screen.page}>
             <KeyboardAwareScrollView>
-                <BoardGameInfo {...game} />
+                <GameInfo {...game} />
                 <BoardPlayers teamOnePlayers={teamOne.players} teamTwoPlayers={teamTwo.players} />
 
                 <View style={styles.infoContainer}>
@@ -46,8 +44,8 @@ const Board = ({ navigation }) => {
                 </View>
                 <View style={styles.infoContainer}>
                     <View style={styles.totalsContainer}>
-                        <Text style={styles.totalCount}>Total: {points.reduce((prev, curr) => curr.team1Shot + prev, 0)}</Text>
-                        <Text style={styles.totalCount}>Total: {points.reduce((prev, curr) => curr.team2Shot + prev, 0)}</Text>
+                        <Text style={styles.totalCount}>Total: {getTotal(currentGameID, points.length, 1)}</Text>
+                        <Text style={styles.totalCount}>Total: {getTotal(currentGameID, points.length, 2)}</Text>
                     </View>
                 </View>
             </KeyboardAwareScrollView>

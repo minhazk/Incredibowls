@@ -2,8 +2,8 @@ import { StyleSheet, TextInput } from 'react-native';
 import { useGameContext } from '../context/GameContext';
 import { colours } from '../styles/global';
 
-const ShotsInput = ({ team, shot, end }) => {
-    const { updatePoint } = useGameContext();
+const ShotsInput = ({ team, end }) => {
+    const { getCurrentShot, updatePoint } = useGameContext();
 
     const handleUpdatePoint = point => {
         updatePoint(end, team, point);
@@ -15,7 +15,7 @@ const ShotsInput = ({ team, shot, end }) => {
         handleUpdatePoint(value);
     };
 
-    return <TextInput defaultValue={shot.toString()} onEndEditing={handleInput} style={styles.scoreInput} keyboardType='numeric' placeholder='0' />;
+    return <TextInput defaultValue={getCurrentShot(team, end).toString()} onEndEditing={handleInput} style={styles.scoreInput} keyboardType='numeric' placeholder='0' />;
 };
 
 const styles = StyleSheet.create({
