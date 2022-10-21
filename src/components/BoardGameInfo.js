@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         borderWidth: 1,
         borderColor: colours.lightGray,
-        paddingVertical: 1,
+        paddingVertical: 2,
         paddingHorizontal: 10,
         borderRadius: 2.5,
         textAlign: 'center',

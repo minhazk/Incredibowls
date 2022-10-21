@@ -78,7 +78,12 @@ export const GameContextProvider = ({ children }) => {
                     team1Shot: 3,
                     team2Shot: 0,
                 },
+                {
+                    team1Shot: 0,
+                    team2Shot: 0,
+                },
             ],
+            images: [],
         },
         {
             id: 2,
@@ -99,6 +104,7 @@ export const GameContextProvider = ({ children }) => {
                     team2Shot: 0,
                 },
             ],
+            images: [],
         },
     ]);
     const [currentGameID, setCurrentGameID] = useState();
@@ -109,6 +115,7 @@ export const GameContextProvider = ({ children }) => {
             ...gameInfo,
             points: [{ team1Shot: 0, team2Shot: 0 }],
             date: new Date(), // until date input is implemented
+            images: [],
         };
         setCurrentGameID(newGame.id);
         dispatch({ type: ACTIONS.create, payload: newGame });

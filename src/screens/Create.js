@@ -4,6 +4,7 @@ import CustomButton from '../components/CustomButton';
 import FormInput from '../components/FormInput';
 import { useGameContext } from '../context/GameContext';
 import { screen } from '../styles/global';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const Create = ({ navigation }) => {
     const [gameInfo, setGameInfo] = useState({});
@@ -34,6 +35,8 @@ const Create = ({ navigation }) => {
             <View style={screen.topGap}>
                 <FormInput label='Competition' onChange={text => updateGameInfo('competition', text)} />
                 <FormInput label='Date' onChange={text => updateGameInfo('date', text)} />
+
+                <DateTimePicker value={new Date()} mode={'date'} is24Hour={true} display='default' />
                 <FormInput label='Rink No' onChange={text => updateGameInfo('rink', text)} keyboardType='numeric' />
                 <FormInput label='Team One Name' onChange={text => updateGameInfo('team1', text)} />
                 <FormInput label='Team Two Name' onChange={text => updateGameInfo('team2', text)} />

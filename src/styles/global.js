@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const colours = {
     primary: '#553E97',
-    secondary: '#fff',
+    secondary: '#f09d43',
     team1: '#5F92F5',
     team2: '#FF7575',
     danger: '#EA5656',

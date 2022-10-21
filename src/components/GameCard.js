@@ -42,7 +42,7 @@ const GameCard = ({ navigation, id, competition, date, rink, team1, team2 }) => 
 
 const styles = StyleSheet.create({
     gameCardContainer: {
-        backgroundColor: colours.secondary,
+        backgroundColor: 'white',
         marginBottom: 10,
         borderRadius: 10,
         padding: 10,

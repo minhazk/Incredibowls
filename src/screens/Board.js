@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
 import ScoreRow from '../components/ScoreRow';
 import { screen } from '../styles/global';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -6,6 +6,7 @@ import { useGameContext } from '../context/GameContext';
 import CustomButton from '../components/CustomButton';
 import BoardPlayers from '../components/BoardPlayers';
 import GameInfo from '../components/BoardGameInfo';
+import BoardImages from '../components/BoardImages';
 
 const Board = ({ navigation }) => {
     const { currentGameID, getCurrentGame, getTotal } = useGameContext();
@@ -19,7 +20,8 @@ const Board = ({ navigation }) => {
         );
     }
     const game = getCurrentGame();
-    const { team1, team2, points } = game;
+    const { team1, team2, points, images } = game;
+    const dummyImages = ['https://picsum.photos/500/200', 'https://picsum.photos/200/300', 'https://picsum.photos/200/400'];
 
     return (
         <SafeAreaView style={screen.page}>
@@ -48,6 +50,16 @@ const Board = ({ navigation }) => {
                         <Text style={styles.totalCount}>Total: {getTotal(currentGameID, points.length, 2)}</Text>
                     </View>
                 </View>
+
+                <View style={styles.buttonContainer}>
+                    <CustomButton label='Take Picture' />
+                </View>
+
+                {!!dummyImages.length && (
+                    <View style={styles.infoContainer}>
+                        <BoardImages images={dummyImages} />
+                    </View>
+                )}
             </KeyboardAwareScrollView>
         </SafeAreaView>
     );
@@ -88,8 +100,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
     },
-    page: {
-        height: '100%',
+    buttonContainer: {
+        marginBottom: 10,
     },
 });
 

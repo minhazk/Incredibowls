@@ -13,8 +13,7 @@ const CustomButton = ({ onPress, label, style }) => {
 const styles = StyleSheet.create({
     pressable: {
         padding: 5,
-        color: colours.secondary,
-        backgroundColor: colours.accent,
+        backgroundColor: colours.secondary,
         borderRadius: 5,
         padding: 10,
         alignItems: 'center',
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
     },
     label: {
-        color: colours.secondary,
+        color: 'white',
         fontWeight: 'bold',
         fontSize: 12,
     },
