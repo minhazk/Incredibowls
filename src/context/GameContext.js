@@ -1,5 +1,11 @@
-import { useContext, createContext, useReducer, useState } from 'react';
+import { useContext, createContext, useReducer, useState, useEffect } from 'react';
 import uuid from 'react-native-uuid';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const api = axios.create({
+    baseURL: 'http://localhost:3001',
+});
 
 const ACTIONS = {
     create: 'Create',
@@ -9,6 +15,7 @@ const ACTIONS = {
     updateGameInfo: 'Update Game Info',
     updateTeamName: 'Update Team Name',
     updatePlayer: 'Update Player',
+    updateGames: 'Update Games',
 };
 
 const GameContext = createContext({});
@@ -49,67 +56,53 @@ const reducer = (state, action) => {
                 game[`team${teamNo}`].players[playerNo] = name;
                 return { ...game };
             });
+        case ACTIONS.updateGames:
+            return action.payload;
         default:
             return state;
     }
 };
 
 export const GameContextProvider = ({ children }) => {
-    const [games, dispatch] = useReducer(reducer, [
-        {
-            id: 1,
-            competition: 'Competition',
-            date: new Date(),
-            rink: 4,
-            team1: {
-                name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4'],
-            },
-            team2: {
-                name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4'],
-            },
-            points: [
-                {
-                    team1Shot: 0,
-                    team2Shot: 5,
-                },
-                {
-                    team1Shot: 3,
-                    team2Shot: 0,
-                },
-                {
-                    team1Shot: 0,
-                    team2Shot: 0,
-                },
-            ],
-            images: [],
-        },
-        {
-            id: 2,
-            competition: 'Competition',
-            date: new Date(),
-            rink: 3,
-            team1: {
-                name: 'Team One',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4'],
-            },
-            team2: {
-                name: 'Team Two',
-                players: ['Player 1', 'Player 2', 'Player 3', 'Player 4'],
-            },
-            points: [
-                {
-                    team1Shot: 0,
-                    team2Shot: 0,
-                },
-            ],
-            images: [],
-        },
-    ]);
-    const [currentGameID, setCurrentGameID] = useState();
+    const [games, dispatch] = useReducer(reducer, []);
+    const [currentGameID, setCurrentGameID] = useState(null);
 
-    const createGame = gameInfo => {
+    useEffect(() => {
+        // const source = new axios.CancelToken.source();
+        // updateGames(source)
+        // return () => source.cancel()
+        (async () => {
+            // AsyncStorage.setItem('games', JSON.stringify([]));
+            const data = await getLocalStorageGames();
+            // console.log('data', data);
+            dispatch({ type: ACTIONS.updateGames, payload: data });
+        })();
+        // console.log(getLocalStorageGames(), 'tyo');
+    }, []);
+
+    const getLocalStorageGames = async () => {
+        const data = await AsyncStorage.getItem('games');
+        const json = JSON.parse(data);
+        // const json2 = JSON.parse(json);
+        // console.log(json);
+        return json || [];
+    };
+
+    const setLocalStorageGames = async games => {
+        AsyncStorage.setItem('games', JSON.stringify(games));
+    };
+
+    const updateGames = source => {
+        api.get('/games', { cancelToken: source?.token })
+            .then(({ data }) => {
+                dispatch({ type: ACTIONS.updateGames, payload: data });
+            })
+            .catch(err => {
+                if (!axios.isCancel(err)) console.log(err);
+            });
+    };
+
+    const createGame = async (gameInfo, callback) => {
         const newGame = {
             id: uuid.v4(),
             ...gameInfo,
@@ -119,6 +112,10 @@ export const GameContextProvider = ({ children }) => {
         };
         setCurrentGameID(newGame.id);
         dispatch({ type: ACTIONS.create, payload: newGame });
+        if (callback) callback();
+        const prev = await getLocalStorageGames();
+        // console.log(JSON.stringify([...prev, newGame]));
+        await AsyncStorage.setItem('games', JSON.stringify([...prev, newGame]));
     };
 
     const getCurrentGame = () => {
@@ -127,8 +124,10 @@ export const GameContextProvider = ({ children }) => {
 
     const findGame = id => games.find(game => game.id === id);
 
-    const deleteGame = id => {
+    const deleteGame = async id => {
         dispatch({ type: ACTIONS.delete, payload: { id } });
+        const prev = await getLocalStorageGames();
+        setLocalStorageGames(prev.filter(game => game.id !== id));
     };
 
     const updatePoint = (end, team, point) => {
@@ -165,7 +164,7 @@ export const GameContextProvider = ({ children }) => {
         dispatch({ type: ACTIONS.updatePlayer, payload: { currentGameID, teamNo, playerNo, name } });
     };
 
-    console.log(getCurrentGame());
+    // console.log(getCurrentGame());
 
     return (
         <GameContext.Provider

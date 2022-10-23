@@ -1,3 +1,4 @@
+import { StackActions } from '@react-navigation/native';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import FormInput from '../components/FormInput';
@@ -15,14 +16,20 @@ const PlayerForm = ({ navigation }) => {
             <View style={screen.page}>
                 <View>
                     <Text style={styles.teamHeader}>Team 1: {team1.name}</Text>
-                    {Array.from({ length: MAX_TEAM_SIZE }).map((x, i) => {
+                    {Array.from({ length: MAX_TEAM_SIZE }).map((_x, i) => {
                         return <FormInput onChange={text => updatePlayer('1', i, text)} objectKey={i} label={`Player ${i + 1}`} key={i} />;
                     })}
                     <Text style={styles.teamHeader}>Team 2: {team2.name}</Text>
-                    {Array.from({ length: MAX_TEAM_SIZE }).map((x, i) => {
+                    {Array.from({ length: MAX_TEAM_SIZE }).map((_x, i) => {
                         return <FormInput onChange={text => updatePlayer('2', i, text)} objectKey={i} label={`Player ${i + 1}`} key={i} />;
                     })}
-                    <CustomButton label='Create Team' onPress={() => navigation.navigate('Board')} />
+                    <CustomButton
+                        label='Create Team'
+                        onPress={() => {
+                            navigation.dispatch(StackActions.pop(1));
+                            navigation.navigate('Board');
+                        }}
+                    />
                 </View>
             </View>
         </ScrollView>
