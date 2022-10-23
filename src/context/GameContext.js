@@ -1,11 +1,6 @@
 import { useContext, createContext, useReducer, useState, useEffect } from 'react';
-import uuid from 'react-native-uuid';
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const api = axios.create({
-    baseURL: 'http://localhost:3001',
-});
+import uuid from 'react-native-uuid';
 
 const ACTIONS = {
     create: 'Create',
@@ -68,38 +63,23 @@ export const GameContextProvider = ({ children }) => {
     const [currentGameID, setCurrentGameID] = useState(null);
 
     useEffect(() => {
-        // const source = new axios.CancelToken.source();
-        // updateGames(source)
-        // return () => source.cancel()
         (async () => {
-            // AsyncStorage.setItem('games', JSON.stringify([]));
             const data = await getLocalStorageGames();
-            // console.log('data', data);
             dispatch({ type: ACTIONS.updateGames, payload: data });
         })();
-        // console.log(getLocalStorageGames(), 'tyo');
     }, []);
+
+    useEffect(() => {
+        setLocalStorageGames(games);
+    }, [games]);
 
     const getLocalStorageGames = async () => {
         const data = await AsyncStorage.getItem('games');
-        const json = JSON.parse(data);
-        // const json2 = JSON.parse(json);
-        // console.log(json);
-        return json || [];
+        return JSON.parse(data) || [];
     };
 
     const setLocalStorageGames = async games => {
         AsyncStorage.setItem('games', JSON.stringify(games));
-    };
-
-    const updateGames = source => {
-        api.get('/games', { cancelToken: source?.token })
-            .then(({ data }) => {
-                dispatch({ type: ACTIONS.updateGames, payload: data });
-            })
-            .catch(err => {
-                if (!axios.isCancel(err)) console.log(err);
-            });
     };
 
     const createGame = async (gameInfo, callback) => {
@@ -114,7 +94,6 @@ export const GameContextProvider = ({ children }) => {
         dispatch({ type: ACTIONS.create, payload: newGame });
         if (callback) callback();
         const prev = await getLocalStorageGames();
-        // console.log(JSON.stringify([...prev, newGame]));
         await AsyncStorage.setItem('games', JSON.stringify([...prev, newGame]));
     };
 
