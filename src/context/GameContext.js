@@ -1,6 +1,6 @@
 import { useContext, createContext, useReducer, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid';
+import uuid from 'react-native-uuid'; // universally random id for each game to
 
 const ACTIONS = {
     create: 'Create',
@@ -93,8 +93,8 @@ export const GameContextProvider = ({ children }) => {
         setCurrentGameID(newGame.id);
         dispatch({ type: ACTIONS.create, payload: newGame });
         if (callback) callback();
-        const prev = await getLocalStorageGames();
-        await AsyncStorage.setItem('games', JSON.stringify([...prev, newGame]));
+        // const prev = await getLocalStorageGames();
+        // await AsyncStorage.setItem('games', JSON.stringify([...prev, newGame]));
     };
 
     const getCurrentGame = () => {
@@ -105,8 +105,6 @@ export const GameContextProvider = ({ children }) => {
 
     const deleteGame = async id => {
         dispatch({ type: ACTIONS.delete, payload: { id } });
-        const prev = await getLocalStorageGames();
-        setLocalStorageGames(prev.filter(game => game.id !== id));
     };
 
     const updatePoint = (end, team, point) => {
@@ -142,8 +140,6 @@ export const GameContextProvider = ({ children }) => {
     const updatePlayer = (teamNo, playerNo, name) => {
         dispatch({ type: ACTIONS.updatePlayer, payload: { currentGameID, teamNo, playerNo, name } });
     };
-
-    // console.log(getCurrentGame());
 
     return (
         <GameContext.Provider

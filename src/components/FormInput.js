@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { colours } from '../styles/global';
 
-const FormInput = ({ label, placeholder, onChange, keyboardType }) => {
+const FormInput = ({ label, placeholder, onChange, defaultValue, keyboardType, disabled }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
-            <TextInput onChangeText={onChange} style={styles.input} placeholder={placeholder ?? 'Type here'} keyboardType={keyboardType ?? 'default'} />
+            <TextInput onChangeText={onChange} style={styles.input} defaultValue={defaultValue} editable={disabled} placeholder={placeholder ?? 'Type here'} keyboardType={keyboardType ?? 'default'} />
         </View>
     );
 };

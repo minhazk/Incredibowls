@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import ScoreRow from '../components/ScoreRow';
 import { screen } from '../styles/global';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -9,7 +9,7 @@ import GameInfo from '../components/BoardGameInfo';
 import BoardImages from '../components/BoardImages';
 
 const Board = ({ navigation }) => {
-    const { currentGameID, getCurrentGame, getTotal } = useGameContext();
+    const { currentGameID, setCurrentGameID, getCurrentGame, getTotal } = useGameContext();
     if (!currentGameID) {
         return (
             <SafeAreaView style={screen.page}>
@@ -60,6 +60,16 @@ const Board = ({ navigation }) => {
                         <BoardImages images={dummyImages} />
                     </View>
                 )}
+
+                <View style={styles.buttonContainer}>
+                    <CustomButton
+                        label='Finish Game'
+                        onPress={() => {
+                            setCurrentGameID(null);
+                            navigation.navigate('Home');
+                        }}
+                    />
+                </View>
             </KeyboardAwareScrollView>
         </SafeAreaView>
     );
