@@ -21,8 +21,8 @@ const Create = ({ navigation }) => {
     };
 
     const handleCreateGame = () => {
-        for (let value of Object.entries(gameInfo)) {
-            if (gameInfo[value] === '' || gameInfo[value] === {}) return alert(`Please provide a ${value}`);
+        for (let key of Object.keys(gameInfo)) {
+            if (!gameInfo[key]) return alert(`Please provide a ${key}`);
         }
         const { team1, team2, ...rest } = gameInfo;
         createGame(

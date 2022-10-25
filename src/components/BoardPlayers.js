@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useGameContext } from '../context/GameContext';
 import { colours } from '../styles/global';
 
@@ -39,17 +39,17 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colours.lightGray,
         borderRadius: 2.5,
-        paddingVertical: 2,
+        paddingVertical: Platform.OS === 'ios' ? 6 : 2,
         paddingHorizontal: 7,
-        fontSize: 15,
+        fontSize: Platform.OS === 'ios' ? 19 : 15,
         textAlign: 'center',
     },
     team2Player: {
         color: colours.team2,
     },
     playerCount: {
-        marginHorizontal: 10,
-        fontSize: 13,
+        marginHorizontal: Platform.OS === 'ios' ? 15 : 10,
+        fontSize: Platform.OS === 'ios' ? 16 : 15,
     },
 });
 

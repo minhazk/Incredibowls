@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useGameContext } from '../context/GameContext';
 import { colours, screen } from '../styles/global';
 import { getLongDate } from '../utils/DateFormatter';
@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 2,
+        paddingVertical: Platform.OS === 'ios' ? 3 : 2,
         flex: 1,
     },
     label: {
         color: colours.primary,
-        fontSize: 15,
+        fontSize: Platform.OS === 'ios' ? 17 : 15,
         marginRight: 10,
         fontWeight: 'bold',
     },
@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
     input: {
-        fontSize: 15,
+        fontSize: Platform.OS === 'ios' ? 17 : 15,
         borderWidth: 1,
         borderColor: colours.lightGray,
         color: colours.mediumGray,
-        paddingVertical: 2,
+        paddingVertical: Platform.OS === 'ios' ? 10 : 2,
         paddingHorizontal: 10,
         borderRadius: 2.5,
         flex: 1,
@@ -68,9 +68,10 @@ const styles = StyleSheet.create({
         color: colours.team1,
         flex: 1,
         fontWeight: 'bold',
+        fontSize: Platform.OS === 'ios' ? 17 : 15,
         borderWidth: 1,
         borderColor: colours.lightGray,
-        paddingVertical: 2,
+        paddingVertical: Platform.OS === 'ios' ? 10 : 2,
         paddingHorizontal: 10,
         borderRadius: 2.5,
         textAlign: 'center',
@@ -81,7 +82,8 @@ const styles = StyleSheet.create({
     },
     vs: {
         // fontWeight: 'bold',
-        marginHorizontal: 7,
+        marginHorizontal: Platform.OS === 'ios' ? 12 : 10,
+        fontSize: Platform.OS === 'ios' ? 17 : 15,
     },
 });
 

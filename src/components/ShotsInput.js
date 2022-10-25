@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput } from 'react-native';
+import { Platform, StyleSheet, TextInput } from 'react-native';
 import { useGameContext } from '../context/GameContext';
 import { colours } from '../styles/global';
 
@@ -30,8 +30,9 @@ const styles = StyleSheet.create({
     scoreInput: {
         flex: 1,
         borderWidth: 0.25,
+        fontSize: Platform.OS === 'ios' ? 18 : 15,
         borderColor: colours.lightGray,
-        padding: 3,
+        padding: Platform.OS === 'ios' ? 7 : 5,
         textAlign: 'center',
         color: colours.accent,
     },

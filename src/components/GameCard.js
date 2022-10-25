@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform } from 'react-native';
 import { useGameContext } from '../context/GameContext';
 import { colours, defaultButtonStyles } from '../styles/global';
 import { getShortDate } from '../utils/DateFormatter';
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginBottom: 10,
         borderRadius: 10,
-        padding: 10,
+        padding: Platform.OS === 'ios' ? 20 : 10,
     },
     teamsContainer: {
         flexDirection: 'row',
@@ -55,10 +55,12 @@ const styles = StyleSheet.create({
     team1Label: {
         color: colours.team1,
         fontWeight: 'bold',
+        fontSize: Platform.OS === 'ios' ? 18 : 15,
     },
     team2Label: {
         color: colours.team2,
         fontWeight: 'bold',
+        fontSize: Platform.OS === 'ios' ? 18 : 15,
     },
     scoresContainer: {
         marginLeft: 25,
@@ -66,20 +68,20 @@ const styles = StyleSheet.create({
     },
     score: {
         fontWeight: 'bold',
-        fontSize: 17,
+        fontSize: Platform.OS === 'ios' ? 20 : 17,
         color: colours.accent,
         textAlign: 'center',
     },
     date: {
         color: colours.mediumGray,
         fontWeight: 'bold',
-        fontSize: 12,
+        fontSize: Platform.OS === 'ios' ? 15 : 13,
         marginTop: 2,
         textAlign: 'center',
     },
     competition: {
         textAlign: 'center',
-        fontSize: 13,
+        fontSize: Platform.OS === 'ios' ? 15 : 13,
         fontWeight: 'bold',
         color: colours.mediumGray,
         margin: 5,
@@ -88,6 +90,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 12,
         color: colours.lightGray,
+        fontSize: Platform.OS === 'ios' ? 17 : 13,
     },
     buttonsContainer: {
         alignItems: 'center',

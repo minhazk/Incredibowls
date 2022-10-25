@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import { colours } from '../styles/global';
 
 const FormInput = ({ label, placeholder, onChange, defaultValue, keyboardType, disabled }) => {
@@ -19,14 +19,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     input: {
-        paddingVertical: 1,
+        paddingVertical: Platform.OS === 'ios' ? 10 : 5,
+        fontSize: Platform.OS === 'ios' ? 17 : 14,
         color: 'black',
         borderRadius: 5,
-        fontSize: 12,
     },
     label: {
         color: colours.primary,
-        fontSize: 12,
+        fontSize: Platform.OS === 'ios' ? 16 : 13,
         fontWeight: 'bold',
     },
 });

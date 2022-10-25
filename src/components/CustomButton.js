@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text } from 'react-native';
 import { colours } from '../styles/global';
 
 const CustomButton = ({ onPress, label, style }) => {
@@ -12,10 +12,9 @@ const CustomButton = ({ onPress, label, style }) => {
 
 const styles = StyleSheet.create({
     pressable: {
-        padding: 5,
         backgroundColor: colours.secondary,
         borderRadius: 5,
-        padding: 10,
+        padding: Platform.OS === 'ios' ? 13 : 10,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'white',
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
     label: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 12,
+        fontSize: Platform.OS === 'ios' ? 17 : 14,
     },
 });
 

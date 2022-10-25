@@ -26,6 +26,7 @@ const PlayerForm = ({ navigation }) => {
                     <CustomButton
                         label='Create Team'
                         onPress={() => {
+                            //
                             navigation.dispatch(StackActions.pop(1));
                             navigation.navigate('Board');
                         }}

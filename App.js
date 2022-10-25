@@ -34,10 +34,6 @@ const App = () => {
                     screenOptions={{
                         tabBarActiveTintColor: colours.primary,
                         tabBarInactiveTintColor: 'black',
-                        tabBarStyle: {
-                            height: 55,
-                            paddingBottom: 5,
-                        },
                     }}
                 >
                     <Tab.Screen
@@ -45,7 +41,7 @@ const App = () => {
                         component={Home}
                         options={{
                             tabBarLabel: 'Home',
-                            tabBarIcon: ({ color, size }) => <Ionicons name='home-outline' size={size} color={color} />,
+                            tabBarIcon: ({ color, size }) => <Ionicons name='ios-home-outline' size={size} color={color} />,
                         }}
                     />
                     <Tab.Screen

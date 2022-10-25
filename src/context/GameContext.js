@@ -11,7 +11,11 @@ const ACTIONS = {
     updateTeamName: 'Update Team Name',
     updatePlayer: 'Update Player',
     updateGames: 'Update Games',
+    saveGames: 'Save Games',
+    loadGames: 'Load Games',
 };
+
+const STORAGE_KEY = 'Incredibowls@games';
 
 const GameContext = createContext({});
 export const useGameContext = () => useContext(GameContext);
@@ -53,6 +57,16 @@ const reducer = (state, action) => {
             });
         case ACTIONS.updateGames:
             return action.payload;
+        case ACTIONS.saveGames:
+            try {
+                AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                console.log(e);
+            } finally {
+                return state;
+            }
+        case ACTIONS.loadGames:
+            return [...state, ...action.payload.data];
         default:
             return state;
     }
@@ -64,37 +78,25 @@ export const GameContextProvider = ({ children }) => {
 
     useEffect(() => {
         (async () => {
-            const data = await getLocalStorageGames();
-            dispatch({ type: ACTIONS.updateGames, payload: data });
+            const data = await AsyncStorage.getItem(STORAGE_KEY);
+            dispatch({ type: ACTIONS.loadGames, payload: data });
         })();
     }, []);
 
     useEffect(() => {
-        setLocalStorageGames(games);
-    }, [games]);
-
-    const getLocalStorageGames = async () => {
-        const data = await AsyncStorage.getItem('games');
-        return JSON.parse(data) || [];
-    };
-
-    const setLocalStorageGames = async games => {
-        AsyncStorage.setItem('games', JSON.stringify(games));
-    };
+        dispatch({ type: ACTIONS.saveGames });
+    }, [games, STORAGE_KEY]);
 
     const createGame = async (gameInfo, callback) => {
         const newGame = {
             id: uuid.v4(),
             ...gameInfo,
             points: [{ team1Shot: 0, team2Shot: 0 }],
-            date: new Date(), // until date input is implemented
             images: [],
         };
         setCurrentGameID(newGame.id);
         dispatch({ type: ACTIONS.create, payload: newGame });
         if (callback) callback();
-        // const prev = await getLocalStorageGames();
-        // await AsyncStorage.setItem('games', JSON.stringify([...prev, newGame]));
     };
 
     const getCurrentGame = () => {

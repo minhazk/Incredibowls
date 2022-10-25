@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useGameContext } from '../context/GameContext';
 import { colours } from '../styles/global';
 import ShotsInput from './ShotsInput';
@@ -30,13 +30,15 @@ const styles = StyleSheet.create({
         flex: 1,
         borderWidth: 0.25,
         borderColor: colours.lightGray,
-        padding: 3,
+        fontSize: Platform.OS === 'ios' ? 18 : 15,
+        padding: Platform.OS === 'ios' ? 7 : 5,
         textAlign: 'center',
         color: colours.accent,
     },
     endLabel: {
         flex: 1,
         textAlign: 'center',
+        fontSize: Platform.OS === 'ios' ? 16 : 13,
     },
 });
 

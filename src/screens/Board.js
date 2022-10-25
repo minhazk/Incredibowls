@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native';
 import ScoreRow from '../components/ScoreRow';
 import { screen } from '../styles/global';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
         fontWeight: 'bold',
+        fontSize: Platform.OS === 'ios' ? 15 : 12,
     },
     scoresWrapper: {
         marginTop: 10,
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     totalCount: {
         flex: 1,
         textAlign: 'center',
-        fontWeight: 'bold',
+        fontSize: Platform.OS === 'ios' ? 18 : 15,
     },
     buttonContainer: {
         marginBottom: 10,
