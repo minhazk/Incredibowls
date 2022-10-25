@@ -31,7 +31,9 @@ const Create = ({ navigation }) => {
                 team1: { name: team1, players: [] },
                 team2: { name: team2, players: [] },
             },
-            () => navigation.push('PlayerForm')
+            () => {
+                navigation.push('PlayerForm');
+            }
         );
     };
 

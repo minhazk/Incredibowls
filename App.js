@@ -9,6 +9,7 @@ import { GameContextProvider } from './src/context/GameContext';
 import { colours } from './src/styles/global';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PlayerForm from './src/screens/PlayerForm';
+import Search from './src/screens/Search';
 
 const FormStack = createNativeStackNavigator();
 
@@ -59,6 +60,14 @@ const App = () => {
                         options={{
                             tabBarLabel: 'Board',
                             tabBarIcon: ({ color, size }) => <Ionicons name='md-clipboard-outline' size={size} color={color} />,
+                        }}
+                    />
+                    <Tab.Screen
+                        name='Search'
+                        component={Search}
+                        options={{
+                            tabBarLabel: 'Search',
+                            tabBarIcon: ({ color, size }) => <AntDesign name='search1' size={size} color={color} />,
                         }}
                     />
                 </Tab.Navigator>

@@ -66,7 +66,7 @@ const reducer = (state, action) => {
                 return state;
             }
         case ACTIONS.loadGames:
-            return [...state, ...action.payload.data];
+            return [...state, { ...action.payload }];
         default:
             return state;
     }
@@ -77,11 +77,17 @@ export const GameContextProvider = ({ children }) => {
     const [currentGameID, setCurrentGameID] = useState(null);
 
     useEffect(() => {
-        (async () => {
-            const data = await AsyncStorage.getItem(STORAGE_KEY);
-            dispatch({ type: ACTIONS.loadGames, payload: data });
-        })();
-    }, []);
+        const load = async () => {
+            const storage = await AsyncStorage.getItem(STORAGE_KEY);
+            if (storage !== null && games.length === 0) {
+                const games = JSON.parse(storage);
+                games.forEach(game => {
+                    dispatch({ type: ACTIONS.loadGames, payload: game });
+                });
+            }
+        };
+        load();
+    }, [STORAGE_KEY]);
 
     useEffect(() => {
         dispatch({ type: ACTIONS.saveGames });

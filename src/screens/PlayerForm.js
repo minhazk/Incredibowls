@@ -26,7 +26,8 @@ const PlayerForm = ({ navigation }) => {
                     <CustomButton
                         label='Create Team'
                         onPress={() => {
-                            //
+                            if (team1.players.length !== team2.players.length || !team1.players.length || !team2.players.length)
+                                return window.alert('Both teams must have at least one player and an equal number of players on each side');
                             navigation.dispatch(StackActions.pop(1));
                             navigation.navigate('Board');
                         }}
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
         textAlign: 'center',
-        marginTop: 10,
+        marginTop: 12,
         marginBottom: 20,
     },
 });
