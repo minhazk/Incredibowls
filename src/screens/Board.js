@@ -52,12 +52,12 @@ const Board = ({ navigation }) => {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <CustomButton label='Take Picture' />
+                    <CustomButton label='Take Picture' onPress={() => navigation.navigate('CameraScreen')} />
                 </View>
 
-                {!!dummyImages.length && (
+                {!!images.length && (
                     <View style={styles.infoContainer}>
-                        <BoardImages images={dummyImages} />
+                        <BoardImages images={images} />
                     </View>
                 )}
 

@@ -10,6 +10,7 @@ import { colours } from './src/styles/global';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PlayerForm from './src/screens/PlayerForm';
 import Search from './src/screens/Search';
+import CameraScreen from './src/screens/CameraScreen';
 
 const FormStack = createNativeStackNavigator();
 
@@ -18,6 +19,15 @@ const FormStackScreen = () => {
         <FormStack.Navigator>
             <FormStack.Screen name='GameForm' component={Create} />
             <FormStack.Screen name='PlayerForm' component={PlayerForm} />
+        </FormStack.Navigator>
+    );
+};
+
+const BoardStackScreen = () => {
+    return (
+        <FormStack.Navigator>
+            <FormStack.Screen name='Board' component={Board} />
+            <FormStack.Screen name='CameraScreen' component={CameraScreen} />
         </FormStack.Navigator>
     );
 };
@@ -55,10 +65,28 @@ const App = () => {
                         }}
                     />
                     <Tab.Screen
+                        name='BoardScreen'
+                        component={BoardStackScreen}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel: 'Board',
+                            tabBarIcon: ({ color, size }) => <Ionicons name='md-clipboard-outline' size={size} color={color} />,
+                        }}
+                    />
+                    {/* <Tab.Screen
                         name='Board'
                         component={Board}
                         options={{
                             tabBarLabel: 'Board',
+                            tabBarIcon: ({ color, size }) => <Ionicons name='md-clipboard-outline' size={size} color={color} />,
+                        }}
+                    /> */}
+                    {/* convert camera screen to a stack screen */}
+                    <Tab.Screen
+                        name='CameraScreen'
+                        component={CameraScreen}
+                        options={{
+                            tabBarLabel: 'Camera',
                             tabBarIcon: ({ color, size }) => <Ionicons name='md-clipboard-outline' size={size} color={color} />,
                         }}
                     />
