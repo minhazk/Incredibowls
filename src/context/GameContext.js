@@ -13,6 +13,7 @@ const ACTIONS = {
     updateGames: 'Update Games',
     saveGames: 'Save Games',
     loadGames: 'Load Games',
+    addImage: 'Add Image',
 };
 
 const STORAGE_KEY = 'Incredibowls@games';
@@ -67,6 +68,13 @@ const reducer = (state, action) => {
             }
         case ACTIONS.loadGames:
             return [...state, { ...action.payload }];
+        case ACTIONS.addImage:
+            return state.map(game => {
+                if (game.id !== action.payload.currentGameID) return game;
+                const { uri } = action.payload;
+                game.images = [...game.images, uri];
+                return game;
+            });
         default:
             return state;
     }
@@ -149,6 +157,10 @@ export const GameContextProvider = ({ children }) => {
         dispatch({ type: ACTIONS.updatePlayer, payload: { currentGameID, teamNo, playerNo, name } });
     };
 
+    const addImage = uri => {
+        dispatch({ type: ACTIONS.addImage, payload: { currentGameID, uri } });
+    };
+
     return (
         <GameContext.Provider
             value={{
@@ -165,6 +177,7 @@ export const GameContextProvider = ({ children }) => {
                 updateGameInfo,
                 updateTeamName,
                 updatePlayer,
+                addImage,
             }}
         >
             {children}

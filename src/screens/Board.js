@@ -21,7 +21,6 @@ const Board = ({ navigation }) => {
     }
     const game = getCurrentGame();
     const { team1, team2, points, images } = game;
-    const dummyImages = ['https://picsum.photos/500/200', 'https://picsum.photos/200/300', 'https://picsum.photos/200/400'];
 
     return (
         <SafeAreaView style={screen.page}>

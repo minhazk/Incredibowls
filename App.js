@@ -26,7 +26,7 @@ const FormStackScreen = () => {
 const BoardStackScreen = () => {
     return (
         <FormStack.Navigator>
-            <FormStack.Screen name='Board' component={Board} />
+            <FormStack.Screen name='BoardScreen' component={Board} />
             <FormStack.Screen name='CameraScreen' component={CameraScreen} />
         </FormStack.Navigator>
     );
@@ -65,28 +65,11 @@ const App = () => {
                         }}
                     />
                     <Tab.Screen
-                        name='BoardScreen'
+                        name='Board'
                         component={BoardStackScreen}
                         options={{
                             headerShown: false,
                             tabBarLabel: 'Board',
-                            tabBarIcon: ({ color, size }) => <Ionicons name='md-clipboard-outline' size={size} color={color} />,
-                        }}
-                    />
-                    {/* <Tab.Screen
-                        name='Board'
-                        component={Board}
-                        options={{
-                            tabBarLabel: 'Board',
-                            tabBarIcon: ({ color, size }) => <Ionicons name='md-clipboard-outline' size={size} color={color} />,
-                        }}
-                    /> */}
-                    {/* convert camera screen to a stack screen */}
-                    <Tab.Screen
-                        name='CameraScreen'
-                        component={CameraScreen}
-                        options={{
-                            tabBarLabel: 'Camera',
                             tabBarIcon: ({ color, size }) => <Ionicons name='md-clipboard-outline' size={size} color={color} />,
                         }}
                     />
