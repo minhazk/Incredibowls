@@ -15,7 +15,7 @@ const Home = ({ navigation }) => {
                         <Text style={styles.warningMessage}>Create a game to view or edit</Text>
                     </View>
                 ) : (
-                    games.map((game, i) => {
+                    games.reverse().map((game, i) => {
                         return <GameCard {...game} navigation={navigation} key={game.id} />;
                     })
                 )}
