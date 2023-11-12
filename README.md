@@ -77,4 +77,4 @@ Please replace the placeholders (e.g., your_firebase_api_key) with your actual c
 
 ## License
 
-This project is licensed under the [GNU General Public License v3.0](LICENSE.md). See the [LICENSE.md](LICENSE.md) file for the full text of the license.
+This project is licensed under the [MIT License](LICENSE.md). See the [LICENSE.md](LICENSE.md) file for the full text of the license.
